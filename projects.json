@@ -1,0 +1,10 @@
+[
+    {
+        "project": "web",
+        "scopes": ["scope1", "scope2", "scope3"]
+    },
+    {
+        "project": "python app",
+        "scopes": ["scopeA", "scopeB", "scopeC"]
+    }
+]
