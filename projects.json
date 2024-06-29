@@ -1,0 +1,6 @@
+[
+    {
+        "name": "Ejemplo 1",
+        "scopes": ["scope1", "scope2"]
+    }
+]

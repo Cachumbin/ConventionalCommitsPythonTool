@@ -1,10 +1,8 @@
 import json
 
-file = open('projects.json', 'r')
+def downloadScopes()->list:
+    file = open('projects.json', 'r')
+    data = json.load(file)
+    file.close()
 
-json.decoder(file)
-data = json.load(file)
-
-file.close()
-
-print(data)
+    return data
