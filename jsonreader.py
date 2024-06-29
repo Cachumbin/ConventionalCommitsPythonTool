@@ -1,10 +1,10 @@
 import json
 
+file = open('projects.json', 'r')
 
-with open('projects.json', 'r') as file:
-    data = json.load(file)
+json.decoder(file)
+data = json.load(file)
 
+file.close()
 
-for item in data:
-    print(f"Nombre: {item['project']}")
-    print(f"Scopes: {', '.join(item['scopes'])}\n")
+print(data)
