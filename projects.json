@@ -1,6 +1,6 @@
 [
     {
-        "name": "Ejemplo 1",
+        "name": "Web",
         "scopes": ["scope1", "scope2"]
     }
 ]
