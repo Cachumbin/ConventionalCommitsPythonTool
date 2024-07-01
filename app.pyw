@@ -53,8 +53,18 @@ def enableBreakingChangeFooter():
         breakingChangeFooterText.config(state='normal')
         stateBreakingChangeFooter = True
 
+def createCommitMessage():
+    commitType = ""
+    commitScope = ""
+    commitBreakingChange = ""
+    commitMessage = ""
+    commitBody = ""
+    commitFooter = ""
+
 root = tk.Tk()
 root.title("Conventional Commits Tool")
+root.geometry('600x450')
+root.resizable(False, False)
 
 frm = ttk.Frame(root, padding=10)
 frm.grid()
