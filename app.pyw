@@ -6,11 +6,6 @@ from tkinter import ttk
 projects = jsonreader.downloadScopes()
 names = [project["name"] for project in projects]
 
-stateBreakingChange = False
-stateBreakingChangeFooter = False
-stateBody = False
-stateScope = False
-
 def update_combobox(*args):
     selected_value = project.get()
     for i in projects:
@@ -23,43 +18,40 @@ def enableBreakingChange():
     if(breakingChange.instate(['selected']) != True):
         breakingChangeFooter.config(state='disabled')
         breakingChangeFooterText.config(state='disabled')
-        stateBreakingChange = False
     else:
         breakingChangeFooter.config(state='normal')
         breakingChangeFooterText.config(state='normal')
-        stateBreakingChange = True
 
 def enableScope():
     if(scope.instate(["selected"]) != True):
         scopeBox.config(state='disabled')
-        stateScope = False
     else:
         scopeBox.config(state='normal')
-        stateScope = True
 
 def enableBody():
     if(body.instate(["selected"]) != True):
         bodyText.config(state='disabled')
-        stateBody = False
     else:
         bodyText.config(state='normal')
-        stateBody = True
 
 def enableBreakingChangeFooter():
     if(breakingChangeFooter.instate(["selected"]) != True):
         breakingChangeFooterText.config(state='disabled')
-        stateBreakingChangeFooter = False
     else:
         breakingChangeFooterText.config(state='normal')
-        stateBreakingChangeFooter = True
 
-def createCommitMessage():
-    commitType = ""
-    commitScope = ""
-    commitBreakingChange = ""
-    commitMessage = ""
-    commitBody = ""
-    commitFooter = ""
+def createCommitMessage(*args):
+    commitType = type.get()
+    commitScope = f"({scopeBox.get()})" if scope.instate(['selected']) else ""
+    commitBreakingChange = "!" if breakingChange.instate(['selected']) else ""
+    commitMessage = message.get()
+    commitBody = f"-m \"{bodyText.get()}\"" if body.instate(['selected']) else ""
+    commitFooter = f"-m \"BREAKING CHANGE: {breakingChangeFooterText.get()}\"" if breakingChangeFooter.instate(['selected']) else ""
+
+    commit = f"git commit -m \"{commitType}{commitScope}{commitBreakingChange}: {commitMessage}\" {commitBody} {commitFooter}"
+
+    textToCopy = ttk.Label(frm, text=commit)
+    textToCopy.grid(column=1, row=14, columnspan=2)
 
 root = tk.Tk()
 root.title("Conventional Commits Tool")
@@ -84,7 +76,8 @@ scopeBox = ttk.Combobox(frm, state="readonly", values=[])
 scopeBox.grid(column=2, row=6)
 
 ttk.Label(frm, text="Message").grid(column=1, row=7)
-ttk.Entry(frm).grid(column=1, row=8)
+message = ttk.Entry(frm)
+message.grid(column=1, row=8)
 
 body = ttk.Checkbutton(frm, text="Body", command=enableBody)
 body.grid(column=1, row=10)
@@ -99,6 +92,9 @@ breakingChangeFooterText.grid(column=2, row=12)
 ttk.Label(frm, text="Project Template").grid(column=1, row=1)
 project = ttk.Combobox(frm, state="readonly", values=names)
 project.grid(column=2, row=1)
+
+generateCommit = ttk.Button(frm, text="Generate Commit Message", command=createCommitMessage)
+generateCommit.grid(column=1, row=13)
 
 project.bind("<<ComboboxSelected>>", update_combobox)
 
