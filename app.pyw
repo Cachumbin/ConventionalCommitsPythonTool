@@ -1,4 +1,3 @@
-import os
 import jsonreader
 import tkinter as tk
 from tkinter import ttk
@@ -53,6 +52,9 @@ def createCommitMessage(*args):
     textToCopy = ttk.Label(frm, text=commit)
     textToCopy.grid(column=1, row=14, columnspan=2)
 
+    root.clipboard_clear()
+    root.clipboard_append(commit)
+
 root = tk.Tk()
 root.title("Conventional Commits Tool")
 root.geometry('600x450')
@@ -67,11 +69,15 @@ ttk.Button(frm, text="Projects", command=root.destroy).grid(column=2, row=0)
 ttk.Label(frm, text="Type").grid(column=1, row=2)
 breakingChange = ttk.Checkbutton(frm, text="Breaking Change", command=enableBreakingChange)
 breakingChange.grid(column=2, row=3)
+breakingChange.invoke()
+breakingChange.invoke()
 type = ttk.Combobox(frm, state="readonly", values=["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"])
 type.grid(column=1, row=3)
 
 scope = ttk.Checkbutton(frm, text="Scope", command=enableScope)
 scope.grid(column=1, row=6)
+scope.invoke()
+scope.invoke()
 scopeBox = ttk.Combobox(frm, state="readonly", values=[])
 scopeBox.grid(column=2, row=6)
 
@@ -81,11 +87,15 @@ message.grid(column=1, row=8)
 
 body = ttk.Checkbutton(frm, text="Body", command=enableBody)
 body.grid(column=1, row=10)
+body.invoke()   
+body.invoke()
 bodyText = ttk.Entry(frm)
 bodyText.grid(column=2, row=10)
 
 breakingChangeFooter = ttk.Checkbutton(frm, text="Breaking Change Footer", command=enableBreakingChangeFooter)
 breakingChangeFooter.grid(column=1, row=12)
+breakingChangeFooter.invoke()
+breakingChangeFooter.invoke()
 breakingChangeFooterText = ttk.Entry(frm)
 breakingChangeFooterText.grid(column=2, row=12)
 
@@ -96,6 +106,11 @@ project.grid(column=2, row=1)
 generateCommit = ttk.Button(frm, text="Generate Commit Message", command=createCommitMessage)
 generateCommit.grid(column=1, row=13)
 
+breakingChangeFooterText.config(state='disabled')
+bodyText.config(state='disabled')
+scopeBox.config(state='disabled')
+breakingChangeFooter.config(state='disabled')
+breakingChangeFooterText.config(state='disabled')
 project.bind("<<ComboboxSelected>>", update_combobox)
 
 root.mainloop()
