@@ -113,4 +113,6 @@ breakingChangeFooter.config(state='disabled')
 breakingChangeFooterText.config(state='disabled')
 project.bind("<<ComboboxSelected>>", update_combobox)
 
+frm2 = ttk.Frame(root, padding=10)
+
 root.mainloop()
