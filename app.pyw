@@ -56,6 +56,14 @@ def createCommitMessage(*args):
     root.clipboard_clear()
     root.clipboard_append(commit)
 
+def show_commit_frame():
+    frm2.grid_forget()
+    frm.grid()
+
+def show_project_frame():
+    frm.grid_forget()
+    frm2.grid()
+
 root = tk.Tk()
 root.title("Conventional Commits Tool")
 root.geometry('600x450')
@@ -64,8 +72,8 @@ root.resizable(False, False)
 frm = ttk.Frame(root, padding=10)
 frm.grid()
 
-ttk.Button(frm, text="Commit", command=root.destroy).grid(column=1, row=0)
-ttk.Button(frm, text="Projects", command=root.destroy).grid(column=2, row=0)
+ttk.Button(frm, text="Commit", command=show_commit_frame).grid(column=1, row=0)
+ttk.Button(frm, text="Projects", command=show_project_frame).grid(column=2, row=0)
 
 ttk.Label(frm, text="Type").grid(column=1, row=2)
 breakingChange = ttk.Checkbutton(frm, text="Breaking Change", command=enableBreakingChange)
@@ -115,5 +123,8 @@ breakingChangeFooterText.config(state='disabled')
 project.bind("<<ComboboxSelected>>", update_combobox)
 
 frm2 = ttk.Frame(root, padding=10)
+
+ttk.Button(frm2, text="Commit", command=show_commit_frame).grid(column=1, row=0)
+ttk.Button(frm2, text="Projects", command=show_project_frame).grid(column=2, row=0)
 
 root.mainloop()
