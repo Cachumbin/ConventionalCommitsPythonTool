@@ -19,7 +19,8 @@ def enableBreakingChange():
         breakingChangeFooterText.config(state='disabled')
     else:
         breakingChangeFooter.config(state='normal')
-        breakingChangeFooterText.config(state='normal')
+        if(breakingChangeFooter.instate(["selected"])):
+            breakingChangeFooterText.config(state='normal')
 
 def enableScope():
     if(scope.instate(["selected"]) != True):
