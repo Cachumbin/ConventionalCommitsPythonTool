@@ -13,6 +13,19 @@ def update_combobox(*args):
             scopeBox.current(0)
             break
 
+def update_combobox2(*args):
+    selected_value = projectSelect.get()
+    for i in projects:
+        if selected_value == i["name"]:
+            scopeBox2["values"] = i["scopes"]
+            scopeBox2.current(0)
+            break
+    for i in projects:
+        if selected_value == i["name"]:
+            scopeBox3["values"] = i["scopes"]
+            scopeBox3.current(0)
+            break
+
 def enableBreakingChange():
     if(breakingChange.instate(['selected']) != True):
         breakingChangeFooter.config(state='disabled')
@@ -63,6 +76,13 @@ def show_commit_frame():
 def show_project_frame():
     frm.grid_forget()
     frm2.grid()
+
+def createProject():
+    if(newProject.get() != ""):
+        projects.append({
+            "name": newProject.get(),
+            "scopes": []
+        })
 
 root = tk.Tk()
 root.title("Conventional Commits Tool")
@@ -134,5 +154,30 @@ projectSelect.grid(column=2, row=1)
 ttk.Label(frm2, text="Scopes").grid(column=1, row=2)
 scopeBox2 = ttk.Combobox(frm2, state="readonly", values=[])
 scopeBox2.grid(column=2, row=2)
+newProject = ttk.Entry(frm2)
+newProject.grid(column=3,row=1)
+
+generateProject = ttk.Button(frm2, text="Create Project Template", command=createProject)
+generateProject.grid(column=4, row=1)
+
+projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
+
+ttk.Label(frm2, text="Add Scopes").grid(column=1, row=3)
+
+newScope = ttk.Entry(frm2)
+newScope.grid(column=1,row=4)
+
+generateScope = ttk.Button(frm2, text="Add Scope")
+generateScope.grid(column=2, row=4)
+
+ttk.Label(frm2, text="Delete Scopes").grid(column=1, row=5)
+
+scopeBox3 = ttk.Combobox(frm2, state="readonly", values=[])
+scopeBox3.grid(column=1, row=6)
+
+generateScope = ttk.Button(frm2, text="Delete Scope")
+generateScope.grid(column=2, row=6)
+
+projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 
 root.mainloop()
