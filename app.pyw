@@ -15,43 +15,42 @@ def update_combobox(*args):
 
 def update_combobox2(*args):
     selected_value = projectSelect.get()
+    scopeBox2["values"] = []
+    scopeBox3["values"] = []
     for i in projects:
         if selected_value == i["name"]:
             scopeBox2["values"] = i["scopes"]
             scopeBox2.current(0)
-            break
-    for i in projects:
-        if selected_value == i["name"]:
             scopeBox3["values"] = i["scopes"]
             scopeBox3.current(0)
             break
 
 def enableBreakingChange():
-    if(breakingChange.instate(['selected']) != True):
+    if breakingChange.instate(['selected']):
+        breakingChangeFooter.config(state='normal')
+        if breakingChangeFooter.instate(["selected"]):
+            breakingChangeFooterText.config(state='normal')
+    else:
         breakingChangeFooter.config(state='disabled')
         breakingChangeFooterText.config(state='disabled')
-    else:
-        breakingChangeFooter.config(state='normal')
-        if(breakingChangeFooter.instate(["selected"])):
-            breakingChangeFooterText.config(state='normal')
 
 def enableScope():
-    if(scope.instate(["selected"]) != True):
-        scopeBox.config(state='disabled')
-    else:
+    if scope.instate(["selected"]):
         scopeBox.config(state='normal')
+    else:
+        scopeBox.config(state='disabled')
 
 def enableBody():
-    if(body.instate(["selected"]) != True):
-        bodyText.config(state='disabled')
-    else:
+    if body.instate(["selected"]):
         bodyText.config(state='normal')
+    else:
+        bodyText.config(state='disabled')
 
 def enableBreakingChangeFooter():
-    if(breakingChangeFooter.instate(["selected"]) != True):
-        breakingChangeFooterText.config(state='disabled')
-    else:
+    if breakingChangeFooter.instate(["selected"]):
         breakingChangeFooterText.config(state='normal')
+    else:
+        breakingChangeFooterText.config(state='disabled')
 
 def createCommitMessage(*args):
     commitType = type.get()
@@ -78,11 +77,21 @@ def show_project_frame():
     frm2.grid()
 
 def createProject():
-    if(newProject.get() != ""):
-        projects.append({
-            "name": newProject.get(),
+    new_project_name = newProject.get()
+    if new_project_name:
+        new_project = {
+            "name": new_project_name,
             "scopes": []
-        })
+        }
+        projects.append(new_project)
+        names.append(new_project_name)
+        projectSelect["values"] = names
+        project["values"] = names
+        projectSelect.current(len(names) - 1)
+        update_combobox2()
+
+        scopeBox2["values"] = []
+        scopeBox3["values"] = []
 
 root = tk.Tk()
 root.title("Conventional Commits Tool")
@@ -155,7 +164,7 @@ ttk.Label(frm2, text="Scopes").grid(column=1, row=2)
 scopeBox2 = ttk.Combobox(frm2, state="readonly", values=[])
 scopeBox2.grid(column=2, row=2)
 newProject = ttk.Entry(frm2)
-newProject.grid(column=3,row=1)
+newProject.grid(column=3, row=1)
 
 generateProject = ttk.Button(frm2, text="Create Project Template", command=createProject)
 generateProject.grid(column=4, row=1)
@@ -165,7 +174,7 @@ projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 ttk.Label(frm2, text="Add Scopes").grid(column=1, row=3)
 
 newScope = ttk.Entry(frm2)
-newScope.grid(column=1,row=4)
+newScope.grid(column=1, row=4)
 
 generateScope = ttk.Button(frm2, text="Add Scope")
 generateScope.grid(column=2, row=4)
