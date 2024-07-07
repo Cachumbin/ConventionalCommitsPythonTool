@@ -77,21 +77,27 @@ def show_project_frame():
     frm2.grid()
 
 def createProject():
-    new_project_name = newProject.get()
-    if new_project_name:
-        new_project = {
-            "name": new_project_name,
+    newProjectName = newProject.get()
+    if newProjectName:
+        newProjectDict = {
+            "name": newProjectName,
             "scopes": []
         }
-        projects.append(new_project)
-        names.append(new_project_name)
+        projects.append(newProjectDict)
+        names.append(newProjectName)
         projectSelect["values"] = names
         project["values"] = names
         projectSelect.current(len(names) - 1)
         update_combobox2()
 
-        scopeBox2["values"] = []
-        scopeBox3["values"] = []
+def createScope():
+    newScopeName = newScope.get()
+    projectAddScope = projectSelect.get()
+    for i in projects:
+        if projectAddScope == i["name"]:
+            i["scopes"].append(newScopeName)
+            update_combobox2()
+            break
 
 root = tk.Tk()
 root.title("Conventional Commits Tool")
@@ -125,7 +131,7 @@ message.grid(column=1, row=8)
 
 body = ttk.Checkbutton(frm, text="Body", command=enableBody)
 body.grid(column=1, row=10)
-body.invoke()   
+body.invoke()
 body.invoke()
 bodyText = ttk.Entry(frm)
 bodyText.grid(column=2, row=10)
@@ -176,7 +182,7 @@ ttk.Label(frm2, text="Add Scopes").grid(column=1, row=3)
 newScope = ttk.Entry(frm2)
 newScope.grid(column=1, row=4)
 
-generateScope = ttk.Button(frm2, text="Add Scope")
+generateScope = ttk.Button(frm2, text="Add Scope", command=createScope)
 generateScope.grid(column=2, row=4)
 
 ttk.Label(frm2, text="Delete Scopes").grid(column=1, row=5)
@@ -184,8 +190,8 @@ ttk.Label(frm2, text="Delete Scopes").grid(column=1, row=5)
 scopeBox3 = ttk.Combobox(frm2, state="readonly", values=[])
 scopeBox3.grid(column=1, row=6)
 
-generateScope = ttk.Button(frm2, text="Delete Scope")
-generateScope.grid(column=2, row=6)
+deleteScope = ttk.Button(frm2, text="Delete Scope")
+deleteScope.grid(column=2, row=6)
 
 projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 
