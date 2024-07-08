@@ -68,6 +68,13 @@ def createCommitMessage(*args):
     root.clipboard_clear()
     root.clipboard_append(commit)
 
+    message.delete(0, tk.END)
+    bodyText.delete(0, tk.END)
+    breakingChangeFooterText.delete(0, tk.END)
+
+    type.set('')
+    scopeBox.set('')
+
 def show_commit_frame():
     frm2.grid_forget()
     frm.grid()
@@ -90,14 +97,33 @@ def createProject():
         projectSelect.current(len(names) - 1)
         update_combobox2()
 
+        newProject.set('')
+
 def createScope():
     newScopeName = newScope.get()
     projectAddScope = projectSelect.get()
-    for i in projects:
-        if projectAddScope == i["name"]:
-            i["scopes"].append(newScopeName)
-            update_combobox2()
-            break
+    if newScopeName:
+        for i in projects:
+            if projectAddScope == i["name"]:
+                i["scopes"].append(newScopeName)
+                update_combobox2()
+                break
+    
+    newScope.delete(0, tk.END)
+
+def deleteScope():
+    scopeToDelete = scopeBox3.get()
+    selectedProject = projectSelect.get()
+
+    for project in projects:
+        if project["name"] == selectedProject:
+            if scopeToDelete in project["scopes"]:
+                project["scopes"].remove(scopeToDelete)
+                update_combobox2()
+                break
+
+    scopeBox2.set('')
+    scopeBox3.set('')
 
 root = tk.Tk()
 root.title("Conventional Commits Tool")
@@ -190,7 +216,7 @@ ttk.Label(frm2, text="Delete Scopes").grid(column=1, row=5)
 scopeBox3 = ttk.Combobox(frm2, state="readonly", values=[])
 scopeBox3.grid(column=1, row=6)
 
-deleteScope = ttk.Button(frm2, text="Delete Scope")
+deleteScope = ttk.Button(frm2, text="Delete Scope", command=deleteScope)
 deleteScope.grid(column=2, row=6)
 
 projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
