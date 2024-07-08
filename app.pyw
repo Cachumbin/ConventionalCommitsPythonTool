@@ -92,12 +92,11 @@ def createProject():
         }
         projects.append(newProjectDict)
         names.append(newProjectName)
+        newProject.delete(0, tk.END)
         projectSelect["values"] = names
         project["values"] = names
         projectSelect.current(len(names) - 1)
         update_combobox2()
-
-        newProject.set('')
 
 def createScope():
     newScopeName = newScope.get()
