@@ -1,6 +1,6 @@
-import jsonreader
 import tkinter as tk
 from tkinter import ttk
+import jsonreader
 
 projects = jsonreader.downloadScopes()
 names = [project["name"] for project in projects]
@@ -62,8 +62,8 @@ def createCommitMessage(*args):
 
     commit = f"git commit -m \"{commitType}{commitScope}{commitBreakingChange}: {commitMessage}\" {commitBody} {commitFooter}"
 
-    textToCopy = ttk.Label(frm, text=commit)
-    textToCopy.grid(column=1, row=14, columnspan=2)
+    textToCopy = ttk.Label(frm, text=commit, style='TLabel')
+    textToCopy.grid(column=1, row=14, columnspan=2, padx=10, pady=10, sticky='w')
 
     root.clipboard_clear()
     root.clipboard_append(commit)
@@ -133,14 +133,13 @@ root.resizable(False, False)
 style = ttk.Style()
 style.theme_use('clam')
 
-style.configure('TFrame', background='#505159')
-style.configure('TButton', background='#1B3282', foreground='white', font=('Helvetica', 10, 'bold'), borderwidth=0)
-style.configure('TLabel', background='#505159', font=('Helvetica', 10), foreground='#ffffff')
-style.configure('TEntry', background='#ffffff', foreground='#000000', font=('Helvetica', 10))
-style.configure('TCombobox', background='#ffffff', foreground='#000000', font=('Helvetica', 10))
-style.configure('TCheckbutton', background='#505159', foreground='#ffffff')
+style.configure('TFrame', background='#505159', padding=10, margin=5)
+style.configure('TButton', background='#1B3282', foreground='white', font=('Helvetica', 10, 'bold'), borderwidth=0, padding=5, margin=5)
+style.configure('TLabel', background='#505159', font=('Helvetica', 10), foreground='#ffffff', padding=5, justify=tk.LEFT, margin=5)
+style.configure('TEntry', background='#ffffff', foreground='#000000', font=('Helvetica', 10), padding=5, margin=5)
+style.configure('TCombobox', background='#ffffff', foreground='#000000', font=('Helvetica', 10), padding=5, margin=5)
+style.configure('TCheckbutton', background='#505159', foreground='#ffffff', padding=5, margin=5)
 
-# Configurar el hover de los botones
 style.map('TButton', background=[('active', '#0F87CB')])
 
 root.grid_columnconfigure(0, weight=1)
@@ -149,48 +148,48 @@ root.grid_rowconfigure(0, weight=1)
 frm = ttk.Frame(root, padding=10, style='TFrame')
 frm.grid(sticky='nsew')
 
-ttk.Button(frm, text="Commit", command=show_commit_frame, style='TButton').grid(column=1, row=0)
-ttk.Button(frm, text="Projects", command=show_project_frame, style='TButton').grid(column=2, row=0)
+ttk.Button(frm, text="Commit", command=show_commit_frame, style='TButton').grid(column=1, row=0, sticky='w', padx=10, pady=10)
+ttk.Button(frm, text="Projects", command=show_project_frame, style='TButton').grid(column=2, row=0, sticky='w', padx=10, pady=10)
 
-ttk.Label(frm, text="Type", style='TLabel').grid(column=1, row=2)
+ttk.Label(frm, text="Type", style='TLabel').grid(column=1, row=2, sticky='w', padx=10, pady=10)
 breakingChange = ttk.Checkbutton(frm, text="Breaking Change", command=enableBreakingChange, style='TCheckbutton')
-breakingChange.grid(column=2, row=3)
+breakingChange.grid(column=2, row=3, sticky='w', padx=10, pady=10)
 breakingChange.invoke()
 breakingChange.invoke()
 type = ttk.Combobox(frm, state="readonly", values=["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"], style='TCombobox')
-type.grid(column=1, row=3)
+type.grid(column=1, row=3, sticky='w', padx=10, pady=10)
 
 scope = ttk.Checkbutton(frm, text="Scope", command=enableScope, style='TCheckbutton')
-scope.grid(column=1, row=6)
+scope.grid(column=1, row=6, sticky='w', padx=10, pady=10)
 scope.invoke()
 scope.invoke()
 scopeBox = ttk.Combobox(frm, state="readonly", values=[], style='TCombobox')
-scopeBox.grid(column=2, row=6)
+scopeBox.grid(column=2, row=6, sticky='w', padx=10, pady=10)
 
-ttk.Label(frm, text="Message", style='TLabel').grid(column=1, row=7)
+ttk.Label(frm, text="Message", style='TLabel').grid(column=1, row=7, sticky='w', padx=10, pady=10)
 message = ttk.Entry(frm, style='TEntry')
-message.grid(column=1, row=8)
+message.grid(column=1, row=8, sticky='w', padx=10, pady=10)
 
 body = ttk.Checkbutton(frm, text="Body", command=enableBody, style='TCheckbutton')
-body.grid(column=1, row=10)
+body.grid(column=1, row=10, sticky='w', padx=10, pady=10)
 body.invoke()
 body.invoke()
 bodyText = ttk.Entry(frm, style='TEntry')
-bodyText.grid(column=2, row=10)
+bodyText.grid(column=2, row=10, sticky='w', padx=10, pady=10)
 
 breakingChangeFooter = ttk.Checkbutton(frm, text="Breaking Change Footer", command=enableBreakingChangeFooter, style='TCheckbutton')
-breakingChangeFooter.grid(column=1, row=12)
+breakingChangeFooter.grid(column=1, row=12, sticky='w', padx=10, pady=10)
 breakingChangeFooter.invoke()
 breakingChangeFooter.invoke()
 breakingChangeFooterText = ttk.Entry(frm, style='TEntry')
-breakingChangeFooterText.grid(column=2, row=12)
+breakingChangeFooterText.grid(column=2, row=12, sticky='w', padx=10, pady=10)
 
-ttk.Label(frm, text="Project Template", style='TLabel').grid(column=1, row=1)
+ttk.Label(frm, text="Project Template", style='TLabel').grid(column=1, row=1, sticky='w', padx=10, pady=10)
 project = ttk.Combobox(frm, state="readonly", values=names, style='TCombobox')
-project.grid(column=2, row=1)
+project.grid(column=2, row=1, sticky='w', padx=10, pady=10)
 
 generateCommit = ttk.Button(frm, text="Generate Commit Message", command=createCommitMessage, style='TButton')
-generateCommit.grid(column=1, row=13)
+generateCommit.grid(column=1, row=13, sticky='w', padx=10, pady=10)
 
 breakingChangeFooterText.config(state='disabled')
 bodyText.config(state='disabled')
@@ -201,39 +200,39 @@ project.bind("<<ComboboxSelected>>", update_combobox)
 
 frm2 = ttk.Frame(root, padding=10, style='TFrame')
 
-ttk.Button(frm2, text="Commit", command=show_commit_frame, style='TButton').grid(column=1, row=0)
-ttk.Button(frm2, text="Projects", command=show_project_frame, style='TButton').grid(column=2, row=0)
+ttk.Button(frm2, text="Commit", command=show_commit_frame, style='TButton').grid(column=1, row=0, sticky='w', padx=10, pady=10)
+ttk.Button(frm2, text="Projects", command=show_project_frame, style='TButton').grid(column=2, row=0, sticky='w', padx=10, pady=10)
 
-ttk.Label(frm2, text="Project Template", style='TLabel').grid(column=1, row=1)
+ttk.Label(frm2, text="Project Template", style='TLabel').grid(column=1, row=1, sticky='w', padx=10, pady=10)
 projectSelect = ttk.Combobox(frm2, state="readonly", values=names, style='TCombobox')
-projectSelect.grid(column=2, row=1)
+projectSelect.grid(column=2, row=1, sticky='w', padx=10, pady=10)
 
-ttk.Label(frm2, text="Scopes", style='TLabel').grid(column=1, row=2)
+ttk.Label(frm2, text="Scopes", style='TLabel').grid(column=1, row=2, sticky='w', padx=10, pady=10)
 scopeBox2 = ttk.Combobox(frm2, state="readonly", values=[], style='TCombobox')
-scopeBox2.grid(column=2, row=2)
+scopeBox2.grid(column=2, row=2, sticky='w', padx=10, pady=10)
 newProject = ttk.Entry(frm2, style='TEntry')
-newProject.grid(column=3, row=1)
+newProject.grid(column=3, row=1, sticky='w', padx=10, pady=10)
 
 generateProject = ttk.Button(frm2, text="Create Project Template", command=createProject, style='TButton')
-generateProject.grid(column=4, row=1)
+generateProject.grid(column=4, row=1, sticky='w', padx=10, pady=10)
 
 projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 
-ttk.Label(frm2, text="Add Scopes", style='TLabel').grid(column=1, row=3)
+ttk.Label(frm2, text="Add Scopes", style='TLabel').grid(column=1, row=3, sticky='w', padx=10, pady=10)
 
 newScope = ttk.Entry(frm2, style='TEntry')
-newScope.grid(column=1, row=4)
+newScope.grid(column=1, row=4, sticky='w', padx=10, pady=10)
 
 generateScope = ttk.Button(frm2, text="Add Scope", command=createScope, style='TButton')
-generateScope.grid(column=2, row=4)
+generateScope.grid(column=2, row=4, sticky='w', padx=10, pady=10)
 
-ttk.Label(frm2, text="Delete Scopes", style='TLabel').grid(column=1, row=5)
+ttk.Label(frm2, text="Delete Scopes", style='TLabel').grid(column=1, row=5, sticky='w', padx=10, pady=10)
 
 scopeBox3 = ttk.Combobox(frm2, state="readonly", values=[], style='TCombobox')
-scopeBox3.grid(column=1, row=6)
+scopeBox3.grid(column=1, row=6, sticky='w', padx=10, pady=10)
 
 deleteScope = ttk.Button(frm2, text="Delete Scope", command=deleteScope, style='TButton')
-deleteScope.grid(column=2, row=6)
+deleteScope.grid(column=2, row=6, sticky='w', padx=10, pady=10)
 
 projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 
