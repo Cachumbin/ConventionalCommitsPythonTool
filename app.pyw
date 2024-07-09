@@ -136,15 +136,16 @@ style.theme_use('clam')
 style.configure('TFrame', background='#505159', padding=10, margin=5)
 style.configure('TButton', background='#1B3282', foreground='white', font=('Helvetica', 10, 'bold'), borderwidth=0, padding=5, margin=5)
 style.configure('TLabel', background='#505159', font=('Helvetica', 10), foreground='#ffffff', padding=5, justify=tk.LEFT, margin=5)
+
 style.configure('TEntry', background='#505159', foreground='#ffffff', font=('Helvetica', 10), fieldbackground='#505159', selectbackground='#505159', selectforeground='#ffffff', bordercolor='#ffffff', borderwidth=2, padding=5, margin=5)
 style.map('TEntry',
-          fieldbackground=[('readonly', '#505159')],
-          foreground=[('readonly', '#ffffff')],
-          selectbackground=[('readonly', '#505159')],
-          selectforeground=[('readonly', '#ffffff')],
+          fieldbackground=[('disabled', '#323338')],
+          foreground=[('disabled', '#ffffff')],
+          selectbackground=[('disabled', '#323338')],
+          selectforeground=[('disabled', '#ffffff')],
           highlightbackground=[('hover', '#0F87CB')],
           highlightcolor=[('hover', '#0F87CB')],
-          borderwidth=[('readonly', 2)])
+          borderwidth=[('disabled', 2)])
 
 style.configure('TCheckbutton', background='#505159', foreground='#ffffff', padding=5, margin=5)
 style.map('TCheckbutton',
@@ -152,7 +153,7 @@ style.map('TCheckbutton',
           foreground=[('disabled', '#a8a8a8')],
           highlightbackground=[('hover', '#0F87CB')],
           highlightcolor=[('hover', '#0F87CB')],
-          fieldbackground=[('disabled', '#5c5d66')],
+          fieldbackground=[('disabled', '#323338')],
           selectcolor=[('disabled', '#a8a8a8')],
           textcolor=[('disabled', '#a8a8a8')])
 
