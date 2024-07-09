@@ -2,8 +2,10 @@
     {
         "name": "Web",
         "scopes": [
-            "scope1",
-            "scope2"
+            "Script",
+            "Header",
+            "Footer",
+            "Content"
         ]
     },
     {

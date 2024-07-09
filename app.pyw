@@ -1,8 +1,20 @@
 import tkinter as tk
 from tkinter import ttk
-import jsonreader
+import json
 
-projects = jsonreader.downloadScopes()
+def downloadScopes()->list:
+    file = open('projects.json', 'r')
+    data = json.load(file)
+    file.close()
+
+    return data
+
+def saveProjectsToFile(projects):
+    with open('projects.json', 'w') as f:
+        json.dump(projects, f, indent=4)
+
+
+projects = downloadScopes()
 names = [project["name"] for project in projects]
 
 def update_combobox(*args):
@@ -104,7 +116,7 @@ def createProject():
         projectSelect.current(len(names) - 1)
         update_combobox2()
 
-        jsonreader.saveProjectsToFile(projects)
+        saveProjectsToFile(projects)
 
 def createScope():
     newScopeName = newScope.get()
@@ -116,7 +128,7 @@ def createScope():
             break
 
     newScope.delete(0, tk.END)
-    jsonreader.saveProjectsToFile(projects)
+    saveProjectsToFile(projects)
 
 def deleteScope():
     scopeToDelete = scopeBox3.get()
@@ -130,7 +142,7 @@ def deleteScope():
                 break
 
     scopeBox3.set('')
-    jsonreader.saveProjectsToFile(projects)
+    saveProjectsToFile(projects)
 
 root = tk.Tk()
 root.title("Conventional Commits Tool")
