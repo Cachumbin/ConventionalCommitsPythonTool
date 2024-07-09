@@ -76,11 +76,11 @@ def createCommitMessage(*args):
 
 def show_commit_frame():
     frm2.grid_forget()
-    frm.grid()
+    frm.grid(sticky='nsew')
 
 def show_project_frame():
     frm.grid_forget()
-    frm2.grid()
+    frm2.grid(sticky='nsew')
 
 def createProject():
     newProjectName = newProject.get()
@@ -133,14 +133,21 @@ root.resizable(False, False)
 style = ttk.Style()
 style.theme_use('clam')
 
-style.configure('TFrame', background='#f0f0f0')
-style.configure('TButton', background='#4CAF50', foreground='white', font=('Helvetica', 10, 'bold'))
-style.configure('TLabel', background='#f0f0f0', font=('Helvetica', 10))
-style.configure('TEntry', background='#ffffff')
-style.configure('TCombobox', background='#ffffff')
+style.configure('TFrame', background='#505159')
+style.configure('TButton', background='#1B3282', foreground='white', font=('Helvetica', 10, 'bold'), borderwidth=0)
+style.configure('TLabel', background='#505159', font=('Helvetica', 10), foreground='#ffffff')
+style.configure('TEntry', background='#ffffff', foreground='#000000', font=('Helvetica', 10))
+style.configure('TCombobox', background='#ffffff', foreground='#000000', font=('Helvetica', 10))
+style.configure('TCheckbutton', background='#505159', foreground='#ffffff')
+
+# Configurar el hover de los botones
+style.map('TButton', background=[('active', '#0F87CB')])
+
+root.grid_columnconfigure(0, weight=1)
+root.grid_rowconfigure(0, weight=1)
 
 frm = ttk.Frame(root, padding=10, style='TFrame')
-frm.grid()
+frm.grid(sticky='nsew')
 
 ttk.Button(frm, text="Commit", command=show_commit_frame, style='TButton').grid(column=1, row=0)
 ttk.Button(frm, text="Projects", command=show_project_frame, style='TButton').grid(column=2, row=0)

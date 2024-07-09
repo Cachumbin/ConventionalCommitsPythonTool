@@ -8,6 +8,9 @@
     },
     {
         "name": "Mobile",
-        "scopes": []
+        "scopes": [
+            "Api",
+            "Login"
+        ]
     }
 ]
