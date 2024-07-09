@@ -8,8 +8,8 @@ The Conventional Commits Python Tool provides a graphical interface using tkinte
 
 To run the `app.pyw` file, ensure the following:
 
-- Python 3.x installed on your system.
-- Dependencies: `tkinter`, `json`. (Included with Python)
+- Python 3.x is installed on your system.
+- Dependencies: `tkinter`, `json` (included with Python).
 
 ## Usage
 
@@ -20,7 +20,7 @@ To run the `app.pyw` file, ensure the following:
 2. **Commit Message Generation**:
 
    - **Type**: Select the type of commit (e.g., `feat`, `fix`, `docs`).
-   - **Scope**: Optional scope. It specifies where the changes have been made.
+   - **Scope**: Optional. Specifies where the changes have been made.
    - **Breaking Change**: Check if the commit includes a breaking change.
    - **Message**: Enter a concise commit message.
    - **Body**: Optional. Enter additional details about the commit.
@@ -35,12 +35,12 @@ To run the `app.pyw` file, ensure the following:
      - Delete scopes from existing project templates.
 
 4. **Copying Commit Message**:
-   - The generated commit message will be displayed and copied to the clipboard automatically to paste on git.
-   - Example of the message:
-   ```bash
-   git commit -m "feat(Header): Automatic scrolling when clicking a button" -m "Added the function that scrolls to the section of each button"
-   ```
+   - The generated commit message will be displayed and copied to the clipboard automatically.
+   - Example of a commit message:
+     ```bash
+     git commit -m "feat(Header): Automatic scrolling when clicking a button" -m "Added the function that scrolls to the section of each button"
+     ```
 
 ## Conventional Commits
 
-The full documentation of Conventional Commits where are specified all the caracteristics of the commit is in their oficcial [website](https://www.conventionalcommits.org/en/v1.0.0/).
+For full documentation on Conventional Commits, which specifies all characteristics of a commit, visit their official [website](https://www.conventionalcommits.org/en/v1.0.0/).
