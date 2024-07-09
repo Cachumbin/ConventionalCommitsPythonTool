@@ -6,3 +6,7 @@ def downloadScopes()->list:
     file.close()
 
     return data
+
+def saveProjectsToFile(projects):
+    with open('projects.json', 'w') as f:
+        json.dump(projects, f, indent=4)

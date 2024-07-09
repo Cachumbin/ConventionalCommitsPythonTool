@@ -1,6 +1,13 @@
 [
     {
         "name": "Web",
-        "scopes": ["scope1", "scope2"]
+        "scopes": [
+            "scope1",
+            "scope2"
+        ]
+    },
+    {
+        "name": "Mobile",
+        "scopes": []
     }
 ]

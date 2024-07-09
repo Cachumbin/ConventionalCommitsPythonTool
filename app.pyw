@@ -68,12 +68,11 @@ def createCommitMessage(*args):
     root.clipboard_clear()
     root.clipboard_append(commit)
 
+    type.set('')
+    scopeBox.set('')
     message.delete(0, tk.END)
     bodyText.delete(0, tk.END)
     breakingChangeFooterText.delete(0, tk.END)
-
-    type.set('')
-    scopeBox.set('')
 
 def show_commit_frame():
     frm2.grid_forget()
@@ -92,23 +91,25 @@ def createProject():
         }
         projects.append(newProjectDict)
         names.append(newProjectName)
-        newProject.delete(0, tk.END)
         projectSelect["values"] = names
         project["values"] = names
+        newProject.delete(0, tk.END)
         projectSelect.current(len(names) - 1)
         update_combobox2()
+
+        jsonreader.saveProjectsToFile(projects)
 
 def createScope():
     newScopeName = newScope.get()
     projectAddScope = projectSelect.get()
-    if newScopeName:
-        for i in projects:
-            if projectAddScope == i["name"]:
-                i["scopes"].append(newScopeName)
-                update_combobox2()
-                break
-    
+    for i in projects:
+        if projectAddScope == i["name"]:
+            i["scopes"].append(newScopeName)
+            update_combobox2()
+            break
+
     newScope.delete(0, tk.END)
+    jsonreader.saveProjectsToFile(projects)
 
 def deleteScope():
     scopeToDelete = scopeBox3.get()
@@ -121,8 +122,8 @@ def deleteScope():
                 update_combobox2()
                 break
 
-    scopeBox2.set('')
     scopeBox3.set('')
+    jsonreader.saveProjectsToFile(projects)
 
 root = tk.Tk()
 root.title("Conventional Commits Tool")
