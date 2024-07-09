@@ -55,15 +55,22 @@ def enableBreakingChangeFooter():
 def createCommitMessage(*args):
     commitType = type.get()
     commitScope = f"({scopeBox.get()})" if scope.instate(['selected']) else ""
+    if(scope.instate(['selected'])):
+        scope.invoke()
     commitBreakingChange = "!" if breakingChange.instate(['selected']) else ""
+    if(breakingChange.instate(['selected'])):
+        breakingChange.invoke()
     commitMessage = message.get()
     commitBody = f"-m \"{bodyText.get()}\"" if body.instate(['selected']) else ""
+    if(body.instate(['selected'])):
+        body.invoke()
     commitFooter = f"-m \"BREAKING CHANGE: {breakingChangeFooterText.get()}\"" if breakingChangeFooter.instate(['selected']) else ""
+    if(breakingChangeFooter.instate(['selected'])):
+        breakingChangeFooter.invoke()
 
     commit = f"git commit -m \"{commitType}{commitScope}{commitBreakingChange}: {commitMessage}\" {commitBody} {commitFooter}"
 
-    textToCopy = ttk.Label(frm, text=commit, style='TLabel')
-    textToCopy.grid(column=1, row=14, columnspan=2, padx=5, pady=5, sticky='w')
+    textToCopy.config(text=commit)
 
     root.clipboard_clear()
     root.clipboard_append(commit)
@@ -127,17 +134,17 @@ def deleteScope():
 
 root = tk.Tk()
 root.title("Conventional Commits Tool")
-root.geometry('650x450')
+root.geometry('720x500')
 root.resizable(False, False)
 
 style = ttk.Style()
 style.theme_use('clam')
 
 style.configure('TFrame', background='#505159', padding=10, margin=5)
-style.configure('TButton', background='#1B3282', foreground='white', font=('Helvetica', 10, 'bold'), borderwidth=0, padding=5, margin=5)
-style.configure('TLabel', background='#505159', font=('Helvetica', 10), foreground='#ffffff', padding=5, justify=tk.LEFT, margin=5)
+style.configure('TButton', background='#1B3282', foreground='white', font=('Montserrat', 12, 'bold'), borderwidth=0, padding=5, margin=5)
+style.configure('TLabel', background='#505159', font=('Montserrat', 12), foreground='#ffffff', padding=5, justify=tk.LEFT, margin=5)
 
-style.configure('TEntry', background='#505159', foreground='#ffffff', font=('Helvetica', 10), fieldbackground='#505159', selectbackground='#505159', selectforeground='#ffffff', bordercolor='#ffffff', borderwidth=2, padding=5, margin=5)
+style.configure('TEntry', background='#505159', foreground='#ffffff', font=('Montserrat', 12), fieldbackground='#505159', selectbackground='#505159', selectforeground='#ffffff', bordercolor='#ffffff', borderwidth=2, padding=5, margin=5)
 style.map('TEntry',
           fieldbackground=[('disabled', '#323338')],
           foreground=[('disabled', '#ffffff')],
@@ -225,7 +232,10 @@ project = ttk.Combobox(frm, state="readonly", values=names, style='Custom.TCombo
 project.grid(column=2, row=1, sticky='w', padx=5, pady=5)
 
 generateCommit = ttk.Button(frm, text="Generate Commit Message", command=createCommitMessage, style='TButton')
-generateCommit.grid(column=1, row=13, sticky='w', padx=5, pady=5)
+generateCommit.grid(column=3, row=13, sticky='w', padx=5, pady=5)
+
+textToCopy = ttk.Label(frm, text='', style='TLabel')
+textToCopy.grid(column=1, row=14, columnspan=2, padx=5, pady=5, sticky='w')
 
 breakingChangeFooterText.config(state='disabled')
 bodyText.config(state='disabled')
