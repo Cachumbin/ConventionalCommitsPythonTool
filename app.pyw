@@ -146,7 +146,7 @@ def deleteScope():
 
 root = tk.Tk()
 root.title("Conventional Commits Tool")
-root.geometry('720x500')
+root.geometry('720x600')
 root.resizable(False, False)
 
 style = ttk.Style()
@@ -246,8 +246,8 @@ project.grid(column=2, row=1, sticky='w', padx=5, pady=5)
 generateCommit = ttk.Button(frm, text="Generate Commit Message", command=createCommitMessage, style='TButton')
 generateCommit.grid(column=3, row=13, sticky='w', padx=5, pady=5)
 
-textToCopy = ttk.Label(frm, text='', style='TLabel')
-textToCopy.grid(column=1, row=14, columnspan=2, padx=5, pady=5, sticky='w')
+textToCopy = ttk.Label(frm, text='', style='TLabel', wraplength=680)
+textToCopy.grid(column=1, row=14, columnspan=3, padx=5, pady=5, sticky='w')
 
 breakingChangeFooterText.config(state='disabled')
 bodyText.config(state='disabled')
