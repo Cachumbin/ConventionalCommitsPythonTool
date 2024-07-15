@@ -2,17 +2,15 @@ import tkinter as tk
 from tkinter import ttk
 import json
 
-def downloadScopes()->list:
+def downloadScopes() -> list:
     file = open('projects.json', 'r')
     data = json.load(file)
     file.close()
-
     return data
 
 def saveProjectsToFile(projects):
     with open('projects.json', 'w') as f:
         json.dump(projects, f, indent=4)
-
 
 projects = downloadScopes()
 names = [project["name"] for project in projects]
@@ -115,7 +113,6 @@ def createProject():
         newProject.delete(0, tk.END)
         projectSelect.current(len(names) - 1)
         update_combobox2()
-
         saveProjectsToFile(projects)
 
 def createScope():
@@ -147,23 +144,22 @@ def deleteScope():
 def editProjectName():
     selected_project_name = projectSelect.get()
     new_project_name = newProject.get()
-    
+
     if selected_project_name and new_project_name:
         for project in projects:
             if project["name"] == selected_project_name:
                 project["name"] = new_project_name
                 break
-        
+
         newProject.delete(0, tk.END)
         names[names.index(selected_project_name)] = new_project_name
         projectSelect["values"] = names
-        project["values"] = names
         projectSelect.set(new_project_name)
         project.set(new_project_name)
-        
-        update_combobox()
+
         update_combobox2()
         saveProjectsToFile(projects)
+        update_combobox()
 
 root = tk.Tk()
 root.title("Conventional Commits Tool")
