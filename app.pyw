@@ -151,15 +151,14 @@ def editProjectName():
                 project["name"] = new_project_name
                 break
 
+        saveProjectsToFile(projects)
         newProject.delete(0, tk.END)
         names[names.index(selected_project_name)] = new_project_name
         projectSelect["values"] = names
         projectSelect.set(new_project_name)
         project.set(new_project_name)
-
         update_combobox2()
-        saveProjectsToFile(projects)
-        update_combobox()
+
 
 root = tk.Tk()
 root.title("Conventional Commits Tool")

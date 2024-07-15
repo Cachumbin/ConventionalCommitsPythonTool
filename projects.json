@@ -1,16 +1,15 @@
 [
     {
-        "name": "Website",
+        "name": "Web",
         "scopes": [
             "Script",
             "Header",
             "Footer",
-            "Content",
-            "Root"
+            "Content"
         ]
     },
     {
-        "name": "Mobile App",
+        "name": "Mobile",
         "scopes": [
             "Api"
         ]
