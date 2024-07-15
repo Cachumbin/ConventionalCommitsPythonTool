@@ -144,6 +144,27 @@ def deleteScope():
     scopeBox3.set('')
     saveProjectsToFile(projects)
 
+def editProjectName():
+    selected_project_name = projectSelect.get()
+    new_project_name = newProject.get()
+    
+    if selected_project_name and new_project_name:
+        for project in projects:
+            if project["name"] == selected_project_name:
+                project["name"] = new_project_name
+                break
+        
+        newProject.delete(0, tk.END)
+        names[names.index(selected_project_name)] = new_project_name
+        projectSelect["values"] = names
+        project["values"] = names
+        projectSelect.set(new_project_name)
+        project.set(new_project_name)
+        
+        update_combobox()
+        update_combobox2()
+        saveProjectsToFile(projects)
+
 root = tk.Tk()
 root.title("Conventional Commits Tool")
 root.geometry('720x600')
@@ -273,6 +294,9 @@ newProject.grid(column=3, row=1, sticky='w', padx=5, pady=5)
 
 generateProject = ttk.Button(frm2, text="Create Project Template", command=createProject, style='TButton')
 generateProject.grid(column=4, row=1, sticky='w', padx=5, pady=5)
+
+editProject = ttk.Button(frm2, text="Edit Project Name", command=editProjectName, style="TButton")
+editProject.grid(column=4, row=2, sticky='w', padx=5, pady=5)
 
 projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 
