@@ -11,6 +11,13 @@ def downloadScopes() -> list:
 def saveProjectsToFile(projects):
     with open('projects.json', 'w') as f:
         json.dump(projects, f, indent=4)
+    updateProjects()
+
+def updateProjects():
+    projects = downloadScopes()
+    names = [project["name"] for project in projects]
+    project["values"] = names
+
 
 projects = downloadScopes()
 names = [project["name"] for project in projects]

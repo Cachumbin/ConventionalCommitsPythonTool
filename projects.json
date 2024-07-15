@@ -9,9 +9,10 @@
         ]
     },
     {
-        "name": "Mobile",
+        "name": "Mobile App",
         "scopes": [
-            "Api"
+            "Api",
+            "Login"
         ]
     }
 ]
