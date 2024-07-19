@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import json
+import ttkbootstrap as ttkb
 
 def downloadScopes() -> list:
     file = open('projects.json', 'r')
