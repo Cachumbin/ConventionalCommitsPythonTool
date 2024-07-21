@@ -20,7 +20,6 @@ def updateProjects():
     names = [project["name"] for project in projects]
     project["values"] = names
 
-
 projects = downloadScopes()
 names = [project["name"] for project in projects]
 
@@ -179,33 +178,33 @@ frm.grid(sticky='nsew')
 ttkb.Button(frm, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
 ttkb.Button(frm, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
-ttkb.Label(frm, text="Type", bootstyle="inverse").grid(column=1, row=2, sticky='w', padx=5, pady=5)
-breakingChange = ttkb.Checkbutton(frm, text="Breaking Change", command=enableBreakingChange, bootstyle="dark")
+ttkb.Label(frm, text="Type", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
+breakingChange = ttkb.Checkbutton(frm, text="Breaking Change", command=enableBreakingChange, bootstyle="primary-round-toggle")
 breakingChange.grid(column=2, row=3, sticky='w', padx=5, pady=5)
 breakingChange.invoke()
 breakingChange.invoke()
 type = ttkb.Combobox(frm, state="readonly", values=["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"], bootstyle="default")
 type.grid(column=1, row=3, sticky='w', padx=5, pady=5)
 
-scope = ttkb.Checkbutton(frm, text="Scope", command=enableScope, bootstyle="dark")
+scope = ttkb.Checkbutton(frm, text="Scope", command=enableScope, bootstyle="primary-round-toggle")
 scope.grid(column=1, row=6, sticky='w', padx=5, pady=5)
 scope.invoke()
 scope.invoke()
 scopeBox = ttkb.Combobox(frm, state="readonly", values=[], bootstyle="default")
 scopeBox.grid(column=2, row=6, sticky='w', padx=5, pady=5)
 
-ttkb.Label(frm, text="Message", bootstyle="inverse").grid(column=1, row=7, sticky='w', padx=5, pady=5)
+ttkb.Label(frm, text="Message", bootstyle="dark", foreground="white").grid(column=1, row=7, sticky='w', padx=5, pady=5)
 message = ttkb.Entry(frm, bootstyle="default")
 message.grid(column=1, row=8, sticky='w', padx=5, pady=5)
 
-body = ttkb.Checkbutton(frm, text="Body", command=enableBody, bootstyle="dark")
+body = ttkb.Checkbutton(frm, text="Body", command=enableBody, bootstyle="primary-round-toggle")
 body.grid(column=1, row=10, sticky='w', padx=5, pady=5)
 body.invoke()
 body.invoke()
 bodyText = ttkb.Entry(frm, bootstyle="default")
 bodyText.grid(column=2, row=10, sticky='w', padx=5, pady=5)
 
-breakingChangeFooter = ttkb.Checkbutton(frm, text="Breaking Change Footer", command=enableBreakingChangeFooter, bootstyle="dark")
+breakingChangeFooter = ttkb.Checkbutton(frm, text="Breaking Change Footer", command=enableBreakingChangeFooter, bootstyle="primary-round-toggle")
 breakingChangeFooter.grid(column=1, row=12, sticky='w', padx=5, pady=5)
 breakingChangeFooter.invoke()
 breakingChangeFooter.invoke()
@@ -213,8 +212,8 @@ breakingChangeFooterText = ttkb.Entry(frm, bootstyle="default")
 breakingChangeFooterText.grid(column=2, row=12, sticky='w', padx=5, pady=5)
 
 ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="primary-outline").grid(column=1, row=14, sticky='w', padx=5, pady=5)
-ttkb.Label(frm, text="Commit message to copy", bootstyle="inverse").grid(column=1, row=15, sticky='w', padx=5, pady=5)
-textToCopy = ttkb.Label(frm, text="", bootstyle="inverse")
+ttkb.Label(frm, text="Commit message to copy", bootstyle="dark", foreground="white").grid(column=1, row=15, sticky='w', padx=5, pady=5)
+textToCopy = ttkb.Label(frm, text="", bootstyle="dark", foreground="white")
 textToCopy.grid(column=2, row=15, sticky='w', padx=5, pady=5)
 
 breakingChangeFooterText.config(state='disabled')
@@ -224,21 +223,20 @@ breakingChangeFooter.config(state='disabled')
 breakingChangeFooterText.config(state='disabled')
 project = ttkb.Combobox(frm, state="readonly", values=names, bootstyle="default")
 project.grid(column=2, row=1, sticky='w', padx=5, pady=5)
-ttkb.Label(frm, text="Project Template", bootstyle="inverse").grid(column=1, row=1, sticky='w', padx=5, pady=5)
+ttkb.Label(frm, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=1, sticky='w', padx=5, pady=5)
 project.bind("<<ComboboxSelected>>", update_combobox)
 
 frm2 = ttkb.Frame(root, padding=10, bootstyle="dark")
-frm2.columnconfigure(0, weight=1)
-frm2.rowconfigure(0, weight=1)
+frm2.grid(sticky='nsew')
 
 ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
 ttkb.Button(frm2, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
-ttkb.Label(frm2, text="Project Template", bootstyle="inverse").grid(column=1, row=1, sticky='w', padx=5, pady=5)
+ttkb.Label(frm2, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=1, sticky='w', padx=5, pady=5)
 projectSelect = ttkb.Combobox(frm2, state="readonly", values=names, bootstyle="default")
 projectSelect.grid(column=2, row=1, sticky='w', padx=5, pady=5)
 
-ttkb.Label(frm2, text="Scopes", bootstyle="inverse").grid(column=1, row=2, sticky='w', padx=5, pady=5)
+ttkb.Label(frm2, text="Scopes", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
 scopeBox2 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="default")
 scopeBox2.grid(column=2, row=2, sticky='w', padx=5, pady=5)
 newProject = ttkb.Entry(frm2, bootstyle="default")
@@ -252,7 +250,7 @@ editProject.grid(column=4, row=2, sticky='w', padx=5, pady=5)
 
 projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 
-ttkb.Label(frm2, text="Add Scopes", bootstyle="inverse").grid(column=1, row=3, sticky='w', padx=5, pady=5)
+ttkb.Label(frm2, text="Add Scopes", bootstyle="dark", foreground="white").grid(column=1, row=3, sticky='w', padx=5, pady=5)
 
 newScope = ttkb.Entry(frm2, bootstyle="default")
 newScope.grid(column=1, row=4, sticky='w', padx=5, pady=5)
@@ -260,7 +258,7 @@ newScope.grid(column=1, row=4, sticky='w', padx=5, pady=5)
 generateScope = ttkb.Button(frm2, text="Add Scope", command=createScope, bootstyle="primary-outline")
 generateScope.grid(column=2, row=4, sticky='w', padx=5, pady=5)
 
-ttkb.Label(frm2, text="Delete Scopes", bootstyle="inverse").grid(column=1, row=5, sticky='w', padx=5, pady=5)
+ttkb.Label(frm2, text="Delete Scopes", bootstyle="dark", foreground="white").grid(column=1, row=5, sticky='w', padx=5, pady=5)
 
 scopeBox3 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="default")
 scopeBox3.grid(column=1, row=6, sticky='w', padx=5, pady=5)
