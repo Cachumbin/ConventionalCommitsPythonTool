@@ -172,7 +172,7 @@ root.title("Conventional Commits Tool")
 root.geometry('720x600')
 root.resizable(False, False)
 
-frm = ttkb.Frame(root, padding=10, bootstyle="dark")
+frm = ttkb.Frame(root, padding=10, bootstyle="default")
 frm.grid(sticky='nsew')
 
 ttkb.Button(frm, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
@@ -226,7 +226,7 @@ project.grid(column=2, row=1, sticky='w', padx=5, pady=5)
 ttkb.Label(frm, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=1, sticky='w', padx=5, pady=5)
 project.bind("<<ComboboxSelected>>", update_combobox)
 
-frm2 = ttkb.Frame(root, padding=10, bootstyle="dark")
+frm2 = ttkb.Frame(root, padding=10, bootstyle="default")
 
 ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
 ttkb.Button(frm2, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
