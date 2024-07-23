@@ -48,9 +48,13 @@ def enableBreakingChange():
         breakingChangeFooter.config(state='normal')
         if breakingChangeFooter.instate(["selected"]):
             breakingChangeFooterText.config(state='normal')
+        else:
+            breakingChangeFooterText.config(state='disabled')
+            breakingChangeFooterText.configure(bootstyle='disabled')
     else:
         breakingChangeFooter.config(state='disabled')
         breakingChangeFooterText.config(state='disabled')
+        breakingChangeFooterText.configure(bootstyle='disabled')
 
 def enableScope():
     if scope.instate(["selected"]):
@@ -63,12 +67,14 @@ def enableBody():
         bodyText.config(state='normal')
     else:
         bodyText.config(state='disabled')
+        bodyText.configure(bootstyle='disabled')
 
 def enableBreakingChangeFooter():
     if breakingChangeFooter.instate(["selected"]):
         breakingChangeFooterText.config(state='normal')
     else:
         breakingChangeFooterText.config(state='disabled')
+        breakingChangeFooterText.configure(bootstyle='disabled')
 
 def createCommitMessage(*args):
     commitType = type.get()
@@ -217,7 +223,9 @@ textToCopy = ttkb.Label(frm, text="", bootstyle="dark", foreground="white")
 textToCopy.grid(column=2, row=15, sticky='w', padx=5, pady=5)
 
 breakingChangeFooterText.config(state='disabled')
+breakingChangeFooterText.configure(bootstyle='disabled')
 bodyText.config(state='disabled')
+bodyText.configure(bootstyle='disabled')
 scopeBox.config(state='disabled')
 breakingChangeFooter.config(state='disabled')
 breakingChangeFooterText.config(state='disabled')
