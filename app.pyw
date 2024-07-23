@@ -183,14 +183,14 @@ breakingChange = ttkb.Checkbutton(frm, text="Breaking Change", command=enableBre
 breakingChange.grid(column=2, row=3, sticky='w', padx=5, pady=5)
 breakingChange.invoke()
 breakingChange.invoke()
-type = ttkb.Combobox(frm, state="readonly", values=["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"], bootstyle="default")
+type = ttkb.Combobox(frm, state="readonly", values=["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"], bootstyle="dark")
 type.grid(column=1, row=3, sticky='w', padx=5, pady=5)
 
 scope = ttkb.Checkbutton(frm, text="Scope", command=enableScope, bootstyle="primary-round-toggle")
 scope.grid(column=1, row=6, sticky='w', padx=5, pady=5)
 scope.invoke()
 scope.invoke()
-scopeBox = ttkb.Combobox(frm, state="readonly", values=[], bootstyle="default")
+scopeBox = ttkb.Combobox(frm, state="readonly", values=[], bootstyle="dark")
 scopeBox.grid(column=2, row=6, sticky='w', padx=5, pady=5)
 
 ttkb.Label(frm, text="Message", bootstyle="dark", foreground="white").grid(column=1, row=7, sticky='w', padx=5, pady=5)
@@ -221,7 +221,7 @@ bodyText.config(state='disabled')
 scopeBox.config(state='disabled')
 breakingChangeFooter.config(state='disabled')
 breakingChangeFooterText.config(state='disabled')
-project = ttkb.Combobox(frm, state="readonly", values=names, bootstyle="default")
+project = ttkb.Combobox(frm, state="readonly", values=names, bootstyle="dark")
 project.grid(column=2, row=1, sticky='w', padx=5, pady=5)
 ttkb.Label(frm, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=1, sticky='w', padx=5, pady=5)
 project.bind("<<ComboboxSelected>>", update_combobox)
@@ -232,11 +232,11 @@ ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-o
 ttkb.Button(frm2, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
 ttkb.Label(frm2, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=1, sticky='w', padx=5, pady=5)
-projectSelect = ttkb.Combobox(frm2, state="readonly", values=names, bootstyle="default")
+projectSelect = ttkb.Combobox(frm2, state="readonly", values=names, bootstyle="dark")
 projectSelect.grid(column=2, row=1, sticky='w', padx=5, pady=5)
 
 ttkb.Label(frm2, text="Scopes", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
-scopeBox2 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="default")
+scopeBox2 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="dark")
 scopeBox2.grid(column=2, row=2, sticky='w', padx=5, pady=5)
 newProject = ttkb.Entry(frm2, bootstyle="default")
 newProject.grid(column=3, row=1, sticky='w', padx=5, pady=5)
@@ -259,7 +259,7 @@ generateScope.grid(column=2, row=4, sticky='w', padx=5, pady=5)
 
 ttkb.Label(frm2, text="Delete Scopes", bootstyle="dark", foreground="white").grid(column=1, row=5, sticky='w', padx=5, pady=5)
 
-scopeBox3 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="default")
+scopeBox3 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="dark")
 scopeBox3.grid(column=1, row=6, sticky='w', padx=5, pady=5)
 
 deleteScope = ttkb.Button(frm2, text="Delete Scope", command=deleteScope, bootstyle="primary-outline")
