@@ -50,11 +50,9 @@ def enableBreakingChange():
             breakingChangeFooterText.config(state='normal')
         else:
             breakingChangeFooterText.config(state='disabled')
-            breakingChangeFooterText.configure(bootstyle='disabled')
     else:
         breakingChangeFooter.config(state='disabled')
         breakingChangeFooterText.config(state='disabled')
-        breakingChangeFooterText.configure(bootstyle='disabled')
 
 def enableScope():
     if scope.instate(["selected"]):
@@ -67,14 +65,12 @@ def enableBody():
         bodyText.config(state='normal')
     else:
         bodyText.config(state='disabled')
-        bodyText.configure(bootstyle='disabled')
 
 def enableBreakingChangeFooter():
     if breakingChangeFooter.instate(["selected"]):
         breakingChangeFooterText.config(state='normal')
     else:
         breakingChangeFooterText.config(state='disabled')
-        breakingChangeFooterText.configure(bootstyle='disabled')
 
 def createCommitMessage(*args):
     commitType = type.get()
