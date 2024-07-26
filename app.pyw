@@ -98,8 +98,8 @@ def createCommitMessage(*args):
     type.set('')
     scopeBox.set('')
     message.delete(0, tk.END)
-    bodyText.delete(0, tk.END)
-    breakingChangeFooterText.delete(0, tk.END)
+    bodyText.set('')
+    breakingChangeFooterText.set('')
 
 def show_commit_frame():
     frm2.grid_forget()
