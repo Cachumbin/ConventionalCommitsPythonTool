@@ -1,9 +1,12 @@
+#modules
 import tkinter as tk
 from tkinter import ttk
 import json 
 import ttkbootstrap as ttkb
 from ttkbootstrap.constants import *
 
+
+#functions
 def downloadScopes() -> list:
     file = open('projects.json', 'r')
     data = json.load(file)
@@ -169,6 +172,8 @@ def editProjectName():
         project.set(new_project_name)
         update_combobox2()
 
+
+#widgets
 root = ttkb.Window(themename="solar")
 root.title("Conventional Commits Tool")
 root.geometry('720x600')
