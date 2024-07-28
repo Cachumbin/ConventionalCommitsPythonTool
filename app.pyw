@@ -234,7 +234,7 @@ project = ttkb.Combobox(frm, state="readonly", values=names, bootstyle="dark")
 project.grid(column=2, row=1, sticky='w', padx=5, pady=5)
 ttkb.Label(frm, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=1, sticky='w', padx=5, pady=5)
 project.bind("<<ComboboxSelected>>", update_combobox)
-
+#widgets 2
 frm2 = ttkb.Frame(root, padding=10, bootstyle="default")
 
 ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
