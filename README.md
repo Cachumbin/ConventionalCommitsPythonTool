@@ -9,7 +9,11 @@ The Conventional Commits Python Tool provides a graphical interface using tkinte
 To run the `app.pyw` file, ensure the following:
 
 - Python 3.x is installed on your system.
-- Dependencies: `tkinter`, `json` (included with Python).
+- Dependencies: `tkinter`, `json` (included with Python) and `ttkbootstrap`.
+
+```bash
+     pip install ttkbootstrap
+```
 
 ## Usage
 

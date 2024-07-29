@@ -278,4 +278,6 @@ projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 
 frm.grid(sticky='nsew')
 
+
+#Initialized the window
 root.mainloop()
