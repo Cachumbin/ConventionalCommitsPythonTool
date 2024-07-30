@@ -11,8 +11,7 @@
     {
         "name": "Mobile App",
         "scopes": [
-            "Api",
-            "Login"
+            "Api"
         ]
     },
     {

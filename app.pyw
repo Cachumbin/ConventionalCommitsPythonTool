@@ -38,12 +38,12 @@ def update_combobox(*args):
 
 def update_combobox2(*args):
     selected_value = projectSelect.get()
-    scopeBox2["values"] = []
+    #scopeBox2["values"] = []
     scopeBox3["values"] = []
     for i in projects:
         if selected_value == i["name"]:
-            scopeBox2["values"] = i["scopes"]
-            scopeBox2.current(0)
+            #scopeBox2["values"] = i["scopes"]
+            #scopeBox2.current(0)
             scopeBox3["values"] = i["scopes"]
             scopeBox3.current(0)
             break
@@ -199,7 +199,7 @@ def editProjectName():
 # widgets
 root = ttkb.Window(themename="solar")
 root.title("Conventional Commits Tool")
-root.geometry('720x600')
+root.geometry('350x500')
 root.resizable(False, False)
 
 frm = ttkb.Frame(root, padding=10, bootstyle="default")
@@ -241,8 +241,8 @@ breakingChangeFooter.invoke()
 breakingChangeFooterText = ttkb.Entry(frm, bootstyle="default")
 breakingChangeFooterText.grid(column=2, row=12, sticky='w', padx=5, pady=5)
 
-ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="primary-outline").grid(column=1, row=14, sticky='w', padx=5, pady=5)
-ttkb.Label(frm, text="Commit message to copy", bootstyle="dark", foreground="white").grid(column=1, row=15, sticky='w', padx=5, pady=5)
+#ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="primary-outline").grid(column=1, row=14, sticky='w', padx=5, pady=5)
+#ttkb.Label(frm, text="Commit message to copy", bootstyle="dark", foreground="white").grid(column=1, row=15, sticky='w', padx=5, pady=5)
 textToCopy = ttkb.Label(frm, text="", bootstyle="dark", foreground="white")
 textToCopy.grid(column=2, row=14, sticky='w', padx=5, pady=5)
 
@@ -283,35 +283,35 @@ ttkb.Label(frm2, text="Project Template", bootstyle="dark", foreground="white").
 projectSelect = ttkb.Combobox(frm2, state="readonly", values=names, bootstyle="dark")
 projectSelect.grid(column=2, row=1, sticky='w', padx=5, pady=5)
 
-ttkb.Label(frm2, text="Scopes", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
-scopeBox2 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="dark")
-scopeBox2.grid(column=2, row=2, sticky='w', padx=5, pady=5)
+ttkb.Label(frm2, text="Scopes", bootstyle="dark", foreground="white").grid(column=1, row=4, sticky='w', padx=5, pady=5)
+#scopeBox2 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="dark")
+#scopeBox2.grid(column=2, row=4, sticky='w', padx=5, pady=5)
 newProject = ttkb.Entry(frm2, bootstyle="default")
-newProject.grid(column=3, row=1, sticky='w', padx=5, pady=5)
+newProject.grid(column=1, row=2, sticky='w', padx=5, pady=5)
 
 generateProject = ttkb.Button(frm2, text="Create Project Template", command=createProject, bootstyle="primary-outline")
-generateProject.grid(column=4, row=1, sticky='w', padx=5, pady=5)
+generateProject.grid(column=2, row=2, sticky='w', padx=5, pady=5)
 
 editProject = ttkb.Button(frm2, text="Edit Project Name", command=editProjectName, bootstyle="primary-outline")
-editProject.grid(column=4, row=2, sticky='w', padx=5, pady=5)
+editProject.grid(column=2, row=3, sticky='w', padx=5, pady=5)
 
 projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 
-ttkb.Label(frm2, text="Add Scopes", bootstyle="dark", foreground="white").grid(column=1, row=3, sticky='w', padx=5, pady=5)
+ttkb.Label(frm2, text="Add Scopes", bootstyle="dark", foreground="white").grid(column=1, row=4, sticky='w', padx=5, pady=5)
 
 newScope = ttkb.Entry(frm2, bootstyle="default")
-newScope.grid(column=1, row=4, sticky='w', padx=5, pady=5)
+newScope.grid(column=1, row=5, sticky='w', padx=5, pady=5)
 
 generateScope = ttkb.Button(frm2, text="Add Scope", command=createScope, bootstyle="primary-outline")
-generateScope.grid(column=2, row=4, sticky='w', padx=5, pady=5)
+generateScope.grid(column=2, row=5, sticky='w', padx=5, pady=5)
 
-ttkb.Label(frm2, text="Delete Scopes", bootstyle="dark", foreground="white").grid(column=1, row=5, sticky='w', padx=5, pady=5)
+ttkb.Label(frm2, text="Delete Scopes", bootstyle="dark", foreground="white").grid(column=1, row=6, sticky='w', padx=5, pady=5)
 
 scopeBox3 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="dark")
-scopeBox3.grid(column=1, row=6, sticky='w', padx=5, pady=5)
+scopeBox3.grid(column=1, row=7, sticky='w', padx=5, pady=5)
 
 deleteScope = ttkb.Button(frm2, text="Delete Scope", command=deleteScope, bootstyle="primary-outline")
-deleteScope.grid(column=2, row=6, sticky='w', padx=5, pady=5)
+deleteScope.grid(column=2, row=7, sticky='w', padx=5, pady=5)
 
 projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 
