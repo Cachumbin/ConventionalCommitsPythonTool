@@ -80,24 +80,6 @@ def enableBreakingChangeFooter():
 def changeDirectory():
     global repo_path
     try:
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
-        subprocess.run("cd ..", shell=True, check=True)
         subprocess.run(f"cd {repo_path}", shell=True, check=True)
         commitStatusLabel.config(text=f"Changed Directory to: {repo_path}", bootstyle="success")
     except subprocess.CalledProcessError as e:
@@ -124,13 +106,14 @@ def createCommitMessage(*args):
 
     # Run the git commit command in the selected repository path
     try:
+        subprocess.run("git add .", shell=True, check=True, cwd=repo_path)
         subprocess.run(commit, shell=True, check=True, cwd=repo_path)
-        commitStatusLabel.config(text="Commit successfully created!", foreground="green")
+        commitStatusLabel.config(text="Commit successfully created!", bootstyle="dark")
         root.clipboard_clear()
         root.clipboard_append(commit)
     except subprocess.CalledProcessError as e:
         error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
-        commitStatusLabel.config(text=f"Error: {error_message}", foreground="red")
+        commitStatusLabel.config(text=f"Error: {error_message}", bootstyle="warning1")
         root.clipboard_clear()
         root.clipboard_append(error_message)
 
