@@ -1,12 +1,14 @@
-#modules
 import tkinter as tk
-from tkinter import ttk
-import json 
+from tkinter import ttk, filedialog
+import json
 import ttkbootstrap as ttkb
 from ttkbootstrap.constants import *
+import subprocess
 
+# Global variable to store the selected repository path
+repo_path = ""
 
-#functions
+# functions
 def downloadScopes() -> list:
     file = open('projects.json', 'r')
     data = json.load(file)
@@ -76,22 +78,30 @@ def enableBreakingChangeFooter():
         breakingChangeFooterText.config(state='disabled')
 
 def createCommitMessage(*args):
+    global repo_path
     commitType = type.get()
     commitScope = f"({scopeBox.get()})" if scope.instate(['selected']) else ""
-    if(scope.instate(['selected'])):
+    if scope.instate(['selected']):
         scope.invoke()
     commitBreakingChange = "!" if breakingChange.instate(['selected']) else ""
-    if(breakingChange.instate(['selected'])):
+    if breakingChange.instate(['selected']):
         breakingChange.invoke()
     commitMessage = message.get()
     commitBody = f"-m \"{bodyText.get()}\"" if body.instate(['selected']) else ""
-    if(body.instate(['selected'])):
+    if body.instate(['selected']):
         body.invoke()
     commitFooter = f"-m \"BREAKING CHANGE: {breakingChangeFooterText.get()}\"" if breakingChangeFooter.instate(['selected']) else ""
-    if(breakingChangeFooter.instate(['selected'])):
+    if breakingChangeFooter.instate(['selected']):
         breakingChangeFooter.invoke()
 
     commit = f"git commit -m \"{commitType}{commitScope}{commitBreakingChange}: {commitMessage}\" {commitBody} {commitFooter}"
+
+    # Run the git commit command in the selected repository path
+    try:
+        subprocess.run(commit, cwd=repo_path, shell=True, check=True)
+        textToCopy.config(text="Commit successfully created!")
+    except subprocess.CalledProcessError as e:
+        textToCopy.config(text=f"Error: {e}")
 
     textToCopy.config(text=commit)
 
@@ -103,6 +113,11 @@ def createCommitMessage(*args):
     message.delete(0, tk.END)
     bodyText.set('')
     breakingChangeFooterText.set('')
+
+def selectRepoPath():
+    global repo_path
+    repo_path = filedialog.askdirectory()
+    repoPathLabel.config(text=f"Selected Repo Path: {repo_path}")
 
 def show_commit_frame():
     frm2.grid_forget()
@@ -172,8 +187,7 @@ def editProjectName():
         project.set(new_project_name)
         update_combobox2()
 
-
-#widgets
+# widgets
 root = ttkb.Window(themename="solar")
 root.title("Conventional Commits Tool")
 root.geometry('720x600')
@@ -221,7 +235,12 @@ breakingChangeFooterText.grid(column=2, row=12, sticky='w', padx=5, pady=5)
 ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="primary-outline").grid(column=1, row=14, sticky='w', padx=5, pady=5)
 ttkb.Label(frm, text="Commit message to copy", bootstyle="dark", foreground="white").grid(column=1, row=15, sticky='w', padx=5, pady=5)
 textToCopy = ttkb.Label(frm, text="", bootstyle="dark", foreground="white")
-textToCopy.grid(column=2, row=15, sticky='w', padx=5, pady=5)
+textToCopy.grid(column=2, row=14, sticky='w', padx=5, pady=5)
+
+# Widget to select repo path
+ttkb.Button(frm, text="Select Repo Path", command=selectRepoPath, bootstyle="primary-outline").grid(column=1, row=15, sticky='w', padx=5, pady=5)
+repoPathLabel = ttkb.Label(frm, text="Selected Repo Path: None", bootstyle="dark", foreground="white")
+repoPathLabel.grid(column=2, row=15, sticky='w', padx=5, pady=5)
 
 breakingChangeFooterText.config(state='disabled')
 breakingChangeFooterText.configure(bootstyle='disabled')
@@ -234,7 +253,8 @@ project = ttkb.Combobox(frm, state="readonly", values=names, bootstyle="dark")
 project.grid(column=2, row=1, sticky='w', padx=5, pady=5)
 ttkb.Label(frm, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=1, sticky='w', padx=5, pady=5)
 project.bind("<<ComboboxSelected>>", update_combobox)
-#widgets 2
+
+# widgets 2
 frm2 = ttkb.Frame(root, padding=10, bootstyle="default")
 
 ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
@@ -278,6 +298,5 @@ projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 
 frm.grid(sticky='nsew')
 
-
-#Initialized the window
+# Initialize the window
 root.mainloop()
