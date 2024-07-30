@@ -14,5 +14,11 @@
             "Api",
             "Login"
         ]
+    },
+    {
+        "name": "Python app",
+        "scopes": [
+            "App.pyw"
+        ]
     }
 ]

@@ -319,5 +319,3 @@ frm.grid(sticky='nsew')
 
 # Initialize the window
 root.mainloop()
-
-#test commit
