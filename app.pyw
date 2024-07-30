@@ -80,6 +80,24 @@ def enableBreakingChangeFooter():
 def changeDirectory():
     global repo_path
     try:
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
+        subprocess.run("cd ..", shell=True, check=True)
         subprocess.run(f"cd {repo_path}", shell=True, check=True)
         commitStatusLabel.config(text=f"Changed Directory to: {repo_path}", bootstyle="success")
     except subprocess.CalledProcessError as e:
@@ -106,13 +124,15 @@ def createCommitMessage(*args):
 
     # Run the git commit command in the selected repository path
     try:
-        subprocess.run(commit, shell=True, check=True)
+        subprocess.run(commit, shell=True, check=True, cwd=repo_path)
         commitStatusLabel.config(text="Commit successfully created!", foreground="green")
+        root.clipboard_clear()
+        root.clipboard_append(commit)
     except subprocess.CalledProcessError as e:
-        commitStatusLabel.config(text=f"Error: {e}", foreground="red")
-
-    root.clipboard_clear()
-    root.clipboard_append(commit)
+        error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
+        commitStatusLabel.config(text=f"Error: {error_message}", foreground="red")
+        root.clipboard_clear()
+        root.clipboard_append(error_message)
 
     type.set('')
     scopeBox.set('')
@@ -316,3 +336,5 @@ frm.grid(sticky='nsew')
 
 # Initialize the window
 root.mainloop()
+
+#test commit
