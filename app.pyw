@@ -94,16 +94,14 @@ def createCommitMessage(*args):
     if breakingChangeFooter.instate(['selected']):
         breakingChangeFooter.invoke()
 
-    commit = f"git commit -m \"{commitType}{commitScope}{commitBreakingChange}: {commitMessage}\" {commitBody} {commitFooter}"
+    commit = f"cd {repo_path} && git commit -m \"{commitType}{commitScope}{commitBreakingChange}: {commitMessage}\" {commitBody} {commitFooter}"
 
     # Run the git commit command in the selected repository path
     try:
-        subprocess.run(commit, cwd=repo_path, shell=True, check=True)
-        textToCopy.config(text="Commit successfully created!")
+        subprocess.run(commit, shell=True, check=True)
+        commitStatusLabel.config(text="Commit successfully created!", foreground="green")
     except subprocess.CalledProcessError as e:
-        textToCopy.config(text=f"Error: {e}")
-
-    textToCopy.config(text=commit)
+        commitStatusLabel.config(text=f"Error: {e}", foreground="red")
 
     root.clipboard_clear()
     root.clipboard_append(commit)
@@ -241,6 +239,10 @@ textToCopy.grid(column=2, row=14, sticky='w', padx=5, pady=5)
 ttkb.Button(frm, text="Select Repo Path", command=selectRepoPath, bootstyle="primary-outline").grid(column=1, row=15, sticky='w', padx=5, pady=5)
 repoPathLabel = ttkb.Label(frm, text="Selected Repo Path: None", bootstyle="dark", foreground="white")
 repoPathLabel.grid(column=2, row=15, sticky='w', padx=5, pady=5)
+
+# Label to show commit status
+commitStatusLabel = ttkb.Label(frm, text="", bootstyle="dark", foreground="white")
+commitStatusLabel.grid(column=2, row=16, sticky='w', padx=5, pady=5)
 
 breakingChangeFooterText.config(state='disabled')
 breakingChangeFooterText.configure(bootstyle='disabled')
