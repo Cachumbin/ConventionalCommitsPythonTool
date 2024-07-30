@@ -1,3 +1,4 @@
+#modules
 import tkinter as tk
 from tkinter import ttk, filedialog
 import json
@@ -10,9 +11,8 @@ repo_path = ""
 
 # functions
 def downloadScopes() -> list:
-    file = open('projects.json', 'r')
-    data = json.load(file)
-    file.close()
+    with open('projects.json', 'r') as file:
+        data = json.load(file)
     return data
 
 def saveProjectsToFile(projects):
@@ -77,6 +77,14 @@ def enableBreakingChangeFooter():
     else:
         breakingChangeFooterText.config(state='disabled')
 
+def changeDirectory():
+    global repo_path
+    try:
+        subprocess.run(f"cd {repo_path}", shell=True, check=True)
+        commitStatusLabel.config(text=f"Changed Directory to: {repo_path}", bootstyle="success")
+    except subprocess.CalledProcessError as e:
+        commitStatusLabel.config(text=f"Not changed directory to: {repo_path}", bootstyle="danger")
+
 def createCommitMessage(*args):
     global repo_path
     commitType = type.get()
@@ -94,7 +102,7 @@ def createCommitMessage(*args):
     if breakingChangeFooter.instate(['selected']):
         breakingChangeFooter.invoke()
 
-    commit = f"cd {repo_path} && git commit -m \"{commitType}{commitScope}{commitBreakingChange}: {commitMessage}\" {commitBody} {commitFooter}"
+    commit = f"git commit -m \"{commitType}{commitScope}{commitBreakingChange}: {commitMessage}\" {commitBody} {commitFooter}"
 
     # Run the git commit command in the selected repository path
     try:
@@ -240,9 +248,15 @@ ttkb.Button(frm, text="Select Repo Path", command=selectRepoPath, bootstyle="pri
 repoPathLabel = ttkb.Label(frm, text="Selected Repo Path: None", bootstyle="dark", foreground="white")
 repoPathLabel.grid(column=2, row=15, sticky='w', padx=5, pady=5)
 
+# Button to change directory
+ttkb.Button(frm, text="Change Directory", command=changeDirectory, bootstyle="primary-outline").grid(column=1, row=16, sticky='w', padx=5, pady=5)
+
+# Button to create commit
+ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="success-outline").grid(column=2, row=16, sticky='w', padx=5, pady=5)
+
 # Label to show commit status
 commitStatusLabel = ttkb.Label(frm, text="", bootstyle="dark", foreground="white")
-commitStatusLabel.grid(column=2, row=16, sticky='w', padx=5, pady=5)
+commitStatusLabel.grid(column=2, row=17, sticky='w', padx=5, pady=5)
 
 breakingChangeFooterText.config(state='disabled')
 breakingChangeFooterText.configure(bootstyle='disabled')
