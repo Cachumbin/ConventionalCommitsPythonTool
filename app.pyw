@@ -208,6 +208,8 @@ frm.grid(sticky='nsew')
 ttkb.Button(frm, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
 ttkb.Button(frm, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
+ttk.Separator(frm, orient='horizontal', style='info.Horizontal.TSeparator')
+
 ttkb.Label(frm, text="Type", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
 breakingChange = ttkb.Checkbutton(frm, text="Breaking Change", command=enableBreakingChange, bootstyle="primary-round-toggle")
 breakingChange.grid(column=2, row=3, sticky='w', padx=5, pady=5)
@@ -241,8 +243,6 @@ breakingChangeFooter.invoke()
 breakingChangeFooterText = ttkb.Entry(frm, bootstyle="default")
 breakingChangeFooterText.grid(column=2, row=12, sticky='w', padx=5, pady=5)
 
-#ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="primary-outline").grid(column=1, row=14, sticky='w', padx=5, pady=5)
-#ttkb.Label(frm, text="Commit message to copy", bootstyle="dark", foreground="white").grid(column=1, row=15, sticky='w', padx=5, pady=5)
 textToCopy = ttkb.Label(frm, text="", bootstyle="dark", foreground="white")
 textToCopy.grid(column=2, row=14, sticky='w', padx=5, pady=5)
 
@@ -284,8 +284,6 @@ projectSelect = ttkb.Combobox(frm2, state="readonly", values=names, bootstyle="d
 projectSelect.grid(column=2, row=1, sticky='w', padx=5, pady=5)
 
 ttkb.Label(frm2, text="Scopes", bootstyle="dark", foreground="white").grid(column=1, row=4, sticky='w', padx=5, pady=5)
-#scopeBox2 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="dark")
-#scopeBox2.grid(column=2, row=4, sticky='w', padx=5, pady=5)
 newProject = ttkb.Entry(frm2, bootstyle="default")
 newProject.grid(column=1, row=2, sticky='w', padx=5, pady=5)
 
