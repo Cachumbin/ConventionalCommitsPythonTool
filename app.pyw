@@ -207,8 +207,8 @@ style = ttkb.Style()
 style.configure(
     "Custom.TSeparator", 
     background=root.style.colors.primary,
-    thickness=5,
-    borderwidth=2,
+    thickness=1,
+    #borderwidth=2,
     relief="solid",
 )
 
@@ -222,7 +222,7 @@ ttkb.Button(frm, text="Commit", command=show_commit_frame, bootstyle="primary-ou
 ttkb.Button(frm, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
 #Row 1 (Separator)
-ttk.Separator(frm, orient='horizontal', style='.Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(5, 10))
+ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(20, 10))
 
 #Row 2 (Proyect Selection)
 project = ttkb.Combobox(frm, state="readonly", values=names, bootstyle="primary", foreground="white")
@@ -272,18 +272,21 @@ breakingChangeFooter.invoke()
 breakingChangeFooterText = ttkb.Entry(frm, bootstyle="dark", foreground="white")
 breakingChangeFooterText.grid(column=2, row=9, sticky='w', padx=5, pady=5)
 
-#Row 10 (Select Repo path button and label)
-ttkb.Button(frm, text="Select Repo Path", command=selectRepoPath, bootstyle="primary-outline").grid(column=1, row=10, sticky='w', padx=5, pady=5)
-repoPathLabel = ttkb.Label(frm, text="Selected Repo Path: None", bootstyle="dark", foreground="white")
-repoPathLabel.grid(column=2, row=10, sticky='w', padx=5, pady=5)
+#Row 10 (Separator)
+ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=10, sticky='ew', pady=(20, 10))
 
-#Row 11 (Change repo and create commit buttons)
-ttkb.Button(frm, text="Change Directory", command=changeDirectory, bootstyle="primary-outline").grid(column=1, row=11, sticky='w', padx=5, pady=5)
-ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="success-outline").grid(column=2, row=11, sticky='w', padx=5, pady=5)
+#Row 11 (Select Repo path button and label)
+ttkb.Button(frm, text="Select Repo Path", command=selectRepoPath, bootstyle="primary-outline").grid(column=1, row=11, sticky='w', padx=5, pady=5)
+repoPathLabel = ttkb.Label(frm, text="Selected Repo Path: None", bootstyle="dark", foreground="white")
+repoPathLabel.grid(column=2, row=11, sticky='w', padx=5, pady=5)
+
+#Row 12 (Change repo and create commit buttons)
+ttkb.Button(frm, text="Change Directory", command=changeDirectory, bootstyle="primary-outline").grid(column=1, row=12, sticky='w', padx=5, pady=5)
+ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="success-outline").grid(column=2, row=12, sticky='w', padx=5, pady=5)
 
 # Label to show commit status
 commitStatusLabel = ttkb.Label(frm, text="", bootstyle="dark", foreground="white")
-commitStatusLabel.grid(column=2, row=12, sticky='w', padx=5, pady=5)
+commitStatusLabel.grid(column=2, row=13, sticky='w', padx=5, pady=5)
 
 breakingChangeFooterText.config(state='disabled')
 breakingChangeFooterText.configure(bootstyle='disabled')
@@ -303,7 +306,7 @@ ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-o
 ttkb.Button(frm2, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
 #Row 1 (Separator)
-ttk.Separator(frm2, orient='horizontal', style='.Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(5, 10))
+ttk.Separator(frm2, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(5, 10))
 
 #Row 2 (Project selection)
 ttkb.Label(frm2, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
