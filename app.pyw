@@ -52,12 +52,12 @@ def enableBreakingChange():
     if breakingChange.instate(['selected']):
         breakingChangeFooter.config(state='normal')
         if breakingChangeFooter.instate(["selected"]):
-            breakingChangeFooterText.config(state='normal')
+            breakingChangeFooterText.config(state='normal', bootstyle='primary')
         else:
-            breakingChangeFooterText.config(state='disabled', bootstyle="dark")
+            breakingChangeFooterText.config(state='disabled')
     else:
         breakingChangeFooter.config(state='disabled')
-        breakingChangeFooterText.config(state='disabled', bootstyle="dark")
+        breakingChangeFooterText.config(state='disabled', bootstyle='dark')
 
 def enableScope():
     if scope.instate(["selected"]):
@@ -67,15 +67,15 @@ def enableScope():
 
 def enableBody():
     if body.instate(["selected"]):
-        bodyText.config(state='normal')
+        bodyText.config(state='normal', bootstyle='primary')
     else:
-        bodyText.config(state='disabled')
+        bodyText.config(state='disabled', bootstyle='dark')
 
 def enableBreakingChangeFooter():
     if breakingChangeFooter.instate(["selected"]):
-        breakingChangeFooterText.config(state='normal')
+        breakingChangeFooterText.config(state='normal', bootstyle='primary')
     else:
-        breakingChangeFooterText.config(state='disabled')
+        breakingChangeFooterText.config(state='disabled', bootstyle='dark')
 
 def changeDirectory():
     global repo_path
