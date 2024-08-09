@@ -214,6 +214,8 @@ style.configure(
 
 frm = ttkb.Frame(root, padding=10, bootstyle="default")
 frm.grid(sticky='nsew')
+frm.columnconfigure(1, weight=1, uniform="equal")
+frm.columnconfigure(2, weight=1, uniform="equal")
 
 #Row 0 (Frame Buttons)
 ttkb.Button(frm, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
@@ -251,16 +253,15 @@ scopeBox.grid(column=2, row=5, sticky='w', padx=5, pady=5)
 ttkb.Label(frm, text="Message", bootstyle="dark", foreground="white").grid(column=1, row=6, sticky='w', padx=5, pady=5)
 
 #Row 7 (Message entry)
-message = ttkb.Entry(frm, bootstyle="default")
+message = ttkb.Entry(frm, bootstyle="primary")
 message.grid(column=1, row=7, sticky='w', padx=5, pady=5)
-
 
 #Row 8 (Body entry and toggle)
 body = ttkb.Checkbutton(frm, text="Body", command=enableBody, bootstyle="primary-round-toggle")
 body.grid(column=1, row=8, sticky='w', padx=5, pady=5)
 body.invoke()
 body.invoke()
-bodyText = ttkb.Entry(frm, bootstyle="default")
+bodyText = ttkb.Entry(frm, bootstyle="primary")
 bodyText.grid(column=2, row=8, sticky='w', padx=5, pady=5)
 
 #Row 9 (Breaking change Footer entry and toggle)
@@ -268,7 +269,7 @@ breakingChangeFooter = ttkb.Checkbutton(frm, text="Breaking Change Footer", comm
 breakingChangeFooter.grid(column=1, row=9, sticky='w', padx=5, pady=5)
 breakingChangeFooter.invoke()
 breakingChangeFooter.invoke()
-breakingChangeFooterText = ttkb.Entry(frm, bootstyle="default")
+breakingChangeFooterText = ttkb.Entry(frm, bootstyle="primary")
 breakingChangeFooterText.grid(column=2, row=9, sticky='w', padx=5, pady=5)
 
 #Row 10 (Select Repo path button and label)
@@ -294,6 +295,8 @@ breakingChangeFooterText.config(state='disabled')
 
 #----------Frame 2 (Project Functions)----------#
 frm2 = ttkb.Frame(root, padding=10, bootstyle="default")
+frm2.columnconfigure(1, weight=1, uniform="equal")
+frm2.columnconfigure(2, weight=1, uniform="equal")
 
 #Row 0 (Frame Buttons)
 ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
@@ -311,7 +314,7 @@ projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 #Row 3 (Project name entry and Project creation button)
 generateProject = ttkb.Button(frm2, text="Create Project Template", command=createProject, bootstyle="primary-outline")
 generateProject.grid(column=2, row=3, sticky='w', padx=5, pady=5)
-newProject = ttkb.Entry(frm2, bootstyle="default")
+newProject = ttkb.Entry(frm2, bootstyle="primary")
 newProject.grid(column=1, row=3, sticky='w', padx=5, pady=5)
 
 #Row 4 (Edit project button)
@@ -322,7 +325,7 @@ editProject.grid(column=2, row=4, sticky='w', padx=5, pady=5)
 ttkb.Label(frm2, text="Add Scopes", bootstyle="dark", foreground="white").grid(column=1, row=5, sticky='w', padx=5, pady=5)
 
 #Row 6 (Adding scopes entry and button)
-newScope = ttkb.Entry(frm2, bootstyle="default")
+newScope = ttkb.Entry(frm2, bootstyle="primary")
 newScope.grid(column=1, row=6, sticky='w', padx=5, pady=5)
 generateScope = ttkb.Button(frm2, text="Add Scope", command=createScope, bootstyle="primary-outline")
 generateScope.grid(column=2, row=6, sticky='w', padx=5, pady=5)
