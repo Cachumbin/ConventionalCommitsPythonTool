@@ -81,7 +81,7 @@ def changeDirectory():
     global repo_path
     try:
         subprocess.run(f"cd {repo_path}", shell=True, check=True)
-        commitStatusLabel.config(text=f"Changed Directory to: {repo_path}", bootstyle="success")
+        commitStatusLabel.config(text=f"Actual repo path: {repo_path}", bootstyle="success")
     except subprocess.CalledProcessError as e:
         commitStatusLabel.config(text=f"Not changed directory to: {repo_path}", bootstyle="danger")
 
@@ -108,12 +108,10 @@ def createCommitMessage(*args):
     try:
         subprocess.run("git add .", shell=True, check=True, cwd=repo_path)
         subprocess.run(commit, shell=True, check=True, cwd=repo_path)
-        commitStatusLabel.config(text="Commit successfully created!", bootstyle="dark")
         root.clipboard_clear()
         root.clipboard_append(commit)
     except subprocess.CalledProcessError as e:
         error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
-        commitStatusLabel.config(text=f"Error: {error_message}", bootstyle="warning1")
         root.clipboard_clear()
         root.clipboard_append(error_message)
 
@@ -199,7 +197,7 @@ def editProjectName():
 #----------Frame 1 (Commits Functions)----------#
 root = ttkb.Window(themename="solar")
 root.title("Conventional Commits Tool")
-root.geometry('350x500')
+root.geometry('350x600')
 root.resizable(False, False)
 
 #Style Object
@@ -274,18 +272,22 @@ breakingChangeFooterText.grid(column=2, row=9, sticky='w', padx=5, pady=5)
 #Row 10 (Separator)
 ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=10, sticky='ew', pady=(20, 10))
 
-#Row 11 (Select Repo path button and label)
+#Row 11 (Select Repo path button)
 ttkb.Button(frm, text="Select Repo Path", command=selectRepoPath, bootstyle="primary-outline").grid(column=1, row=11, sticky='w', padx=5, pady=5)
-repoPathLabel = ttkb.Label(frm, text="Selected Repo Path: None", bootstyle="dark", foreground="white")
-repoPathLabel.grid(column=2, row=11, sticky='w', padx=5, pady=5)
 
-#Row 12 (Change repo and create commit buttons)
+#Row 12 (Change repo button)
 ttkb.Button(frm, text="Change Directory", command=changeDirectory, bootstyle="primary-outline").grid(column=1, row=12, sticky='w', padx=5, pady=5)
-ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="success-outline").grid(column=2, row=12, sticky='w', padx=5, pady=5)
+
+#Row 14 (Create commit button)
+ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="success-outline").grid(column=1, row=13, sticky='w', padx=5, pady=5)
+
+#Row 15 (Repo path label)
+repoPathLabel = ttkb.Label(frm, text="Select a repo path", bootstyle="dark", foreground="white", wraplength=300)
+repoPathLabel.grid(columnspan=3, row=14, sticky='w', padx=5, pady=5)
 
 # Label to show commit status
-commitStatusLabel = ttkb.Label(frm, text="", bootstyle="dark", foreground="white")
-commitStatusLabel.grid(column=2, row=13, sticky='w', padx=5, pady=5)
+commitStatusLabel = ttkb.Label(frm, text="", bootstyle="dark", foreground="white", wraplength=300)
+commitStatusLabel.grid(columnspan=3, row=14, sticky='w', padx=5, pady=5)
 
 breakingChangeFooterText.config(state='disabled')
 breakingChangeFooterText.configure(bootstyle='disabled')
