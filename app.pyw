@@ -42,8 +42,6 @@ def update_combobox2(*args):
     scopeBox3["values"] = []
     for i in projects:
         if selected_value == i["name"]:
-            #scopeBox2["values"] = i["scopes"]
-            #scopeBox2.current(0)
             scopeBox3["values"] = i["scopes"]
             scopeBox3.current(0)
             break
@@ -88,21 +86,21 @@ def changeDirectory():
 def createCommitMessage(*args):
     global repo_path
     commitType = type.get()
-    commitScope = f"({scopeBox.get()})" if scope.instate(['selected']) else ""
+    commitScope = f"({scopeBox.get()})" if scope.instate(['selected']) else ''
     if scope.instate(['selected']):
         scope.invoke()
-    commitBreakingChange = "!" if breakingChange.instate(['selected']) else ""
+    commitBreakingChange = '!' if breakingChange.instate(['selected']) else ''
     if breakingChange.instate(['selected']):
         breakingChange.invoke()
     commitMessage = message.get()
-    commitBody = f"-m \"{bodyText.get()}\"" if body.instate(['selected']) else ""
+    commitBody = f"-m \'{bodyText.get()}\'" if body.instate(['selected']) else ''
     if body.instate(['selected']):
         body.invoke()
-    commitFooter = f"-m \"BREAKING CHANGE: {breakingChangeFooterText.get()}\"" if breakingChangeFooter.instate(['selected']) else ""
+    commitFooter = f"-m \'BREAKING CHANGE: {breakingChangeFooterText.get()}\'" if breakingChangeFooter.instate(['selected']) else ""
     if breakingChangeFooter.instate(['selected']):
         breakingChangeFooter.invoke()
 
-    commit = f"git commit -m \"{commitType}{commitScope}{commitBreakingChange}: {commitMessage}\" {commitBody} {commitFooter}"
+    commit = f'git commit -m \'{commitType}{commitScope}{commitBreakingChange}: {commitMessage}\' {commitBody} {commitFooter}'
 
     # Run the git commit command in the selected repository path
     try:
