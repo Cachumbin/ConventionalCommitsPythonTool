@@ -208,7 +208,6 @@ style.configure(
     "Custom.TSeparator", 
     background=root.style.colors.primary,
     thickness=1,
-    #borderwidth=2,
     relief="solid",
 )
 
