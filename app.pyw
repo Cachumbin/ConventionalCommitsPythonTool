@@ -108,6 +108,7 @@ def createCommitMessage(*args):
         subprocess.run(commit, shell=True, check=True, cwd=repo_path)
         root.clipboard_clear()
         root.clipboard_append(commit)
+        show_toast("Commit successfully created", 3000)
     except subprocess.CalledProcessError as e:
         error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
         root.clipboard_clear()
@@ -191,6 +192,21 @@ def editProjectName():
         projectSelect.set(new_project_name)
         project.set(new_project_name)
         update_combobox2()
+        
+def show_toast(message, duration=3000):
+    toast = tk.Toplevel()
+    toast.wm_overrideredirect(True)
+    toast.attributes("-topmost", True)
+
+    label = ttk.Label(toast, text=message, bootstyle="danger", padding=10)
+    label.pack()
+
+    x = (toast.winfo_screenwidth() // 2) - (toast.winfo_reqwidth() // 2)
+    y = toast.winfo_screenheight() - 100
+    toast.geometry(f"+{x}+{y}")
+
+    # Después de un tiempo (en milisegundos), cerrar la ventana
+    toast.after(duration, toast.destroy)
 
 #----------Frame 1 (Commits Functions)----------#
 root = ttkb.Window(themename="solar")
