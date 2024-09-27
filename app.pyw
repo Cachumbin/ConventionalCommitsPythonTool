@@ -79,9 +79,10 @@ def changeDirectory():
     global repo_path
     try:
         subprocess.run(f"cd {repo_path}", shell=True, check=True)
-        commitStatusLabel.config(text=f"Actual repo path: {repo_path}", bootstyle="success")
+        show_toast(f"Changed directory to: {repo_path}", 3000)
     except subprocess.CalledProcessError as e:
-        commitStatusLabel.config(text=f"Not changed directory to: {repo_path}", bootstyle="danger")
+        error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
+        show_toast(f"{error_message}", 3000)
 
 def createCommitMessage(*args):
     global repo_path
@@ -113,6 +114,7 @@ def createCommitMessage(*args):
         error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
         root.clipboard_clear()
         root.clipboard_append(error_message)
+        show_toast(f"{error_message}", 3000)
 
     type.set('')
     scopeBox.set('')
@@ -205,7 +207,6 @@ def show_toast(message, duration=3000):
     y = toast.winfo_screenheight() - 100
     toast.geometry(f"+{x}+{y}")
 
-    # Después de un tiempo (en milisegundos), cerrar la ventana
     toast.after(duration, toast.destroy)
 
 #----------Frame 1 (Commits Functions)----------#
@@ -298,10 +299,6 @@ ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="s
 #Row 15 (Repo path label)
 repoPathLabel = ttkb.Label(frm, text="Select a repo path", bootstyle="dark", foreground="white", wraplength=300)
 repoPathLabel.grid(columnspan=3, row=14, sticky='w', padx=5, pady=5)
-
-# Label to show commit status
-commitStatusLabel = ttkb.Label(frm, text="", bootstyle="dark", foreground="white", wraplength=300)
-commitStatusLabel.grid(columnspan=3, row=14, sticky='w', padx=5, pady=5)
 
 breakingChangeFooterText.config(state='disabled')
 breakingChangeFooterText.configure(bootstyle='disabled')
