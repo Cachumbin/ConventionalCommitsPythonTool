@@ -5,6 +5,7 @@ import json
 import ttkbootstrap as ttkb
 from ttkbootstrap.constants import *
 import subprocess
+import requests
 
 # Global variable to store the selected repository path
 repo_path = ""
@@ -36,15 +37,15 @@ def update_combobox(*args):
             scopeBox.current(0)
             break
 
-def update_combobox2(*args):
-    selected_value = projectSelect.get()
-    #scopeBox2["values"] = []
-    scopeBox3["values"] = []
-    for i in projects:
-        if selected_value == i["name"]:
-            scopeBox3["values"] = i["scopes"]
-            scopeBox3.current(0)
-            break
+# def update_combobox2(*args):
+#     selected_value = projectSelect.get()
+#     #scopeBox2["values"] = []
+#     scopeBox3["values"] = []
+#     for i in projects:
+#         if selected_value == i["name"]:
+#             scopeBox3["values"] = i["scopes"]
+#             scopeBox3.current(0)
+#             break
 
 def enableBreakingChange():
     if breakingChange.instate(['selected']):
@@ -135,65 +136,65 @@ def show_project_frame():
     frm.grid_forget()
     frm2.grid(sticky='nsew')
 
-def createProject():
-    newProjectName = newProject.get()
-    if newProjectName:
-        newProjectDict = {
-            "name": newProjectName,
-            "scopes": []
-        }
-        projects.append(newProjectDict)
-        names.append(newProjectName)
-        projectSelect["values"] = names
-        project["values"] = names
-        newProject.delete(0, tk.END)
-        projectSelect.current(len(names) - 1)
-        update_combobox2()
-        saveProjectsToFile(projects)
+# def createProject():
+#     newProjectName = newProject.get()
+#     if newProjectName:
+#         newProjectDict = {
+#             "name": newProjectName,
+#             "scopes": []
+#         }
+#         projects.append(newProjectDict)
+#         names.append(newProjectName)
+#         projectSelect["values"] = names
+#         project["values"] = names
+#         newProject.delete(0, tk.END)
+#         projectSelect.current(len(names) - 1)
+#         update_combobox2()
+#         saveProjectsToFile(projects)
 
-def createScope():
-    newScopeName = newScope.get()
-    projectAddScope = projectSelect.get()
-    for i in projects:
-        if projectAddScope == i["name"]:
-            i["scopes"].append(newScopeName)
-            update_combobox2()
-            break
+# def createScope():
+#     newScopeName = newScope.get()
+#     projectAddScope = projectSelect.get()
+#     for i in projects:
+#         if projectAddScope == i["name"]:
+#             i["scopes"].append(newScopeName)
+#             update_combobox2()
+#             break
 
-    newScope.delete(0, tk.END)
-    saveProjectsToFile(projects)
+#     newScope.delete(0, tk.END)
+#     saveProjectsToFile(projects)
 
-def deleteScope():
-    scopeToDelete = scopeBox3.get()
-    selectedProject = projectSelect.get()
+# def deleteScope():
+#     scopeToDelete = scopeBox3.get()
+#     selectedProject = projectSelect.get()
 
-    for project in projects:
-        if project["name"] == selectedProject:
-            if scopeToDelete in project["scopes"]:
-                project["scopes"].remove(scopeToDelete)
-                update_combobox2()
-                break
+#     for project in projects:
+#         if project["name"] == selectedProject:
+#             if scopeToDelete in project["scopes"]:
+#                 project["scopes"].remove(scopeToDelete)
+#                 update_combobox2()
+#                 break
 
-    scopeBox3.set('')
-    saveProjectsToFile(projects)
+#     scopeBox3.set('')
+#     saveProjectsToFile(projects)
 
-def editProjectName():
-    selected_project_name = projectSelect.get()
-    new_project_name = newProject.get()
+# def editProjectName():
+#     selected_project_name = projectSelect.get()
+#     new_project_name = newProject.get()
 
-    if selected_project_name and new_project_name:
-        for project in projects:
-            if project["name"] == selected_project_name:
-                project["name"] = new_project_name
-                break
+#     if selected_project_name and new_project_name:
+#         for project in projects:
+#             if project["name"] == selected_project_name:
+#                 project["name"] = new_project_name
+#                 break
 
-        saveProjectsToFile(projects)
-        newProject.delete(0, tk.END)
-        names[names.index(selected_project_name)] = new_project_name
-        projectSelect["values"] = names
-        projectSelect.set(new_project_name)
-        project.set(new_project_name)
-        update_combobox2()
+#         saveProjectsToFile(projects)
+#         newProject.delete(0, tk.END)
+#         names[names.index(selected_project_name)] = new_project_name
+#         projectSelect["values"] = names
+#         projectSelect.set(new_project_name)
+#         project.set(new_project_name)
+#         update_combobox2()
         
 def show_toast(message, duration=3000):
     toast = tk.Toplevel()
@@ -231,7 +232,7 @@ frm.columnconfigure(2, weight=1, uniform="equal")
 
 #Row 0 (Frame Buttons)
 ttkb.Button(frm, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
-ttkb.Button(frm, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
+ttkb.Button(frm, text="Issues", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
 #Row 1 (Separator)
 ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(20, 10))
@@ -315,44 +316,48 @@ frm2.columnconfigure(2, weight=1, uniform="equal")
 
 #Row 0 (Frame Buttons)
 ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
-ttkb.Button(frm2, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
+ttkb.Button(frm2, text="Issues", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
-#Row 1 (Separator)
-ttk.Separator(frm2, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(5, 10))
+# #Row 0 (Frame Buttons)
+# ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
+# ttkb.Button(frm2, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
-#Row 2 (Project selection)
-ttkb.Label(frm2, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
-projectSelect = ttkb.Combobox(frm2, state="readonly", values=names, bootstyle="primary", foreground="white")
-projectSelect.grid(column=2, row=2, sticky='w', padx=5, pady=5)
-projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
+# #Row 1 (Separator)
+# ttk.Separator(frm2, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(5, 10))
 
-#Row 3 (Project name entry and Project creation button)
-generateProject = ttkb.Button(frm2, text="Create Project Template", command=createProject, bootstyle="primary-outline")
-generateProject.grid(column=2, row=3, sticky='w', padx=5, pady=5)
-newProject = ttkb.Entry(frm2, bootstyle="primary", foreground="white")
-newProject.grid(column=1, row=3, sticky='w', padx=5, pady=5)
+# #Row 2 (Project selection)
+# ttkb.Label(frm2, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
+# projectSelect = ttkb.Combobox(frm2, state="readonly", values=names, bootstyle="primary", foreground="white")
+# projectSelect.grid(column=2, row=2, sticky='w', padx=5, pady=5)
+# projectSelect.bind("<<ComboboxSelected>>", update_combobox2)
 
-#Row 4 (Edit project button)
-editProject = ttkb.Button(frm2, text="Edit Project Name", command=editProjectName, bootstyle="primary-outline")
-editProject.grid(column=2, row=4, sticky='w', padx=5, pady=5)
+# #Row 3 (Project name entry and Project creation button)
+# generateProject = ttkb.Button(frm2, text="Create Project Template", command=createProject, bootstyle="primary-outline")
+# generateProject.grid(column=2, row=3, sticky='w', padx=5, pady=5)
+# newProject = ttkb.Entry(frm2, bootstyle="primary", foreground="white")
+# newProject.grid(column=1, row=3, sticky='w', padx=5, pady=5)
 
-#Row 5 (Add scopes label)
-ttkb.Label(frm2, text="Add Scopes", bootstyle="dark", foreground="white").grid(column=1, row=5, sticky='w', padx=5, pady=5)
+# #Row 4 (Edit project button)
+# editProject = ttkb.Button(frm2, text="Edit Project Name", command=editProjectName, bootstyle="primary-outline")
+# editProject.grid(column=2, row=4, sticky='w', padx=5, pady=5)
 
-#Row 6 (Adding scopes entry and button)
-newScope = ttkb.Entry(frm2, bootstyle="primary", foreground="white")
-newScope.grid(column=1, row=6, sticky='w', padx=5, pady=5)
-generateScope = ttkb.Button(frm2, text="Add Scope", command=createScope, bootstyle="primary-outline")
-generateScope.grid(column=2, row=6, sticky='w', padx=5, pady=5)
+# #Row 5 (Add scopes label)
+# ttkb.Label(frm2, text="Add Scopes", bootstyle="dark", foreground="white").grid(column=1, row=5, sticky='w', padx=5, pady=5)
 
-#Row 7 (Delete scopes label)
-ttkb.Label(frm2, text="Delete Scopes", bootstyle="dark", foreground="white").grid(column=1, row=7, sticky='w', padx=5, pady=5)
+# #Row 6 (Adding scopes entry and button)
+# newScope = ttkb.Entry(frm2, bootstyle="primary", foreground="white")
+# newScope.grid(column=1, row=6, sticky='w', padx=5, pady=5)
+# generateScope = ttkb.Button(frm2, text="Add Scope", command=createScope, bootstyle="primary-outline")
+# generateScope.grid(column=2, row=6, sticky='w', padx=5, pady=5)
 
-#Row 8 (Delete scopes select and button)
-scopeBox3 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="primary", foreground="white")
-scopeBox3.grid(column=1, row=8, sticky='w', padx=5, pady=5)
-deleteScope = ttkb.Button(frm2, text="Delete Scope", command=deleteScope, bootstyle="primary-outline")
-deleteScope.grid(column=2, row=8, sticky='w', padx=5, pady=5)
+# #Row 7 (Delete scopes label)
+# ttkb.Label(frm2, text="Delete Scopes", bootstyle="dark", foreground="white").grid(column=1, row=7, sticky='w', padx=5, pady=5)
+
+# #Row 8 (Delete scopes select and button)
+# scopeBox3 = ttkb.Combobox(frm2, state="readonly", values=[], bootstyle="primary", foreground="white")
+# scopeBox3.grid(column=1, row=8, sticky='w', padx=5, pady=5)
+# deleteScope = ttkb.Button(frm2, text="Delete Scope", command=deleteScope, bootstyle="primary-outline")
+# deleteScope.grid(column=2, row=8, sticky='w', padx=5, pady=5)
 
 #Showing the first frame
 frm.grid(sticky='nsew')
