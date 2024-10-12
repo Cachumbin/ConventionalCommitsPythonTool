@@ -11,31 +11,31 @@ import requests
 repo_path = ""
 
 # functions
-def downloadScopes() -> list:
-    with open('projects.json', 'r') as file:
-        data = json.load(file)
-    return data
+# def downloadScopes() -> list:
+#     with open('projects.json', 'r') as file:
+#         data = json.load(file)
+#     return data
 
-def saveProjectsToFile(projects):
-    with open('projects.json', 'w') as f:
-        json.dump(projects, f, indent=4)
-    updateProjects()
+# def saveProjectsToFile(projects):
+#     with open('projects.json', 'w') as f:
+#         json.dump(projects, f, indent=4)
+#     updateProjects()
 
-def updateProjects():
-    projects = downloadScopes()
-    names = [project["name"] for project in projects]
-    project["values"] = names
+# def updateProjects():
+#     projects = downloadScopes()
+#     names = [project["name"] for project in projects]
+#     project["values"] = names
 
-projects = downloadScopes()
-names = [project["name"] for project in projects]
+# projects = downloadScopes()
+# names = [project["name"] for project in projects]
 
-def update_combobox(*args):
-    selected_value = project.get()
-    for i in projects:
-        if selected_value == i["name"]:
-            scopeBox["values"] = i["scopes"]
-            scopeBox.current(0)
-            break
+# def update_combobox(*args):
+#     selected_value = project.get()
+#     for i in projects:
+#         if selected_value == i["name"]:
+#             scopeBox["values"] = i["scopes"]
+#             scopeBox.current(0)
+#             break
 
 # def update_combobox2(*args):
 #     selected_value = projectSelect.get()
@@ -195,6 +195,11 @@ def show_project_frame():
 #         projectSelect.set(new_project_name)
 #         project.set(new_project_name)
 #         update_combobox2()
+
+def saveRepoUser():
+    with open('user_info.json', 'w') as f:
+        json.dump({"repo_user": repo_user.get()}, f, indent=4)
+    
         
 def show_toast(message, duration=3000):
     toast = tk.Toplevel()
@@ -238,10 +243,9 @@ ttkb.Button(frm, text="Issues", command=show_project_frame, bootstyle="primary-o
 ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(20, 10))
 
 #Row 2 (Proyect Selection)
-project = ttkb.Combobox(frm, state="readonly", values=names, bootstyle="primary", foreground="white")
+project = ttkb.Combobox(frm, state="readonly", values=[1,2,3], bootstyle="primary", foreground="white")
 project.grid(column=2, row=2, sticky='w', padx=5, pady=5)
 ttkb.Label(frm, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
-project.bind("<<ComboboxSelected>>", update_combobox)
 
 #Row 3 (Type Label)
 ttkb.Label(frm, text="Type", bootstyle="dark", foreground="white").grid(column=1, row=3, sticky='w', padx=5, pady=5)
@@ -318,6 +322,15 @@ frm2.columnconfigure(2, weight=1, uniform="equal")
 ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
 ttkb.Button(frm2, text="Issues", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
+#Row 1 (Separator)
+ttk.Separator(frm2, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(5, 10))
+
+#Row 2 (User input for repo name)
+ttkb.Label(frm2, text="Repo owner", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
+repo_user = ttkb.Entry(frm2, bootstyle="primary", foreground="white")
+repo_user.grid(column=2, row=2, sticky='w', padx=5, pady=5)
+
+ 
 # #Row 0 (Frame Buttons)
 # ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
 # ttkb.Button(frm2, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
