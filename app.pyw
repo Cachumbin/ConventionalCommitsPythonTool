@@ -330,7 +330,26 @@ ttkb.Label(frm2, text="Repo owner", bootstyle="dark", foreground="white").grid(c
 repo_user = ttkb.Entry(frm2, bootstyle="primary", foreground="white")
 repo_user.grid(column=2, row=2, sticky='w', padx=5, pady=5)
 
- 
+#Row 3 (Button to save repo owner)
+repo_owner = ttkb.Button(frm2, text="Save Repo Owner", command=saveRepoUser, bootstyle="primary-outline")
+repo_owner.grid(column=1, row=3, sticky='w', padx=5, pady=5)
+
+#Row 4 (Repo name label)
+ttkb.Label(frm2, text="Repo Name", bootstyle="dark", foreground="white").grid(column=1, row=4, sticky='w', padx=5, pady=5)
+
+#Row 5 (Repo name entry and autodetect button)
+repo_name_entry = ttkb.Entry(frm2, bootstyle="primary", foreground="white")
+repo_name_entry.grid(column=2, row=5, sticky='w', padx=5, pady=5)
+repo_name_autodetect = ttkb.Button(frm2, text="Autodetect Repo Name", command=saveRepoUser, bootstyle="primary-outline")
+repo_name_autodetect.grid(column=1, row=5, sticky='w', padx=5, pady=5)
+
+#Row 6 (Save Button)
+save_info = ttkb.Button(frm2, text="Save Repo Info", command=saveRepoUser, bootstyle="success-outline")
+save_info.grid(column=1, row=6, sticky='w', padx=5, pady=5)
+
+#Row 7 (Separator)
+ttk.Separator(frm2, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=7, sticky='ew', pady=(5, 10))
+
 # #Row 0 (Frame Buttons)
 # ttkb.Button(frm2, text="Commit", command=show_commit_frame, bootstyle="primary-outline").grid(column=1, row=0, sticky='w', padx=5, pady=5)
 # ttkb.Button(frm2, text="Projects", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
