@@ -28,6 +28,12 @@ def get_repo_name():
     
     repo_name_entry.delete(0, tk.END)
     repo_name_entry.insert(0, repo_name)
+    
+def downloadRepoInfo():
+    with open('user_info.json', 'r') as file:
+        data = json.load(file)
+    return data
+    
 # def downloadScopes() -> list:
 #     with open('projects.json', 'r') as file:
 #         data = json.load(file)
