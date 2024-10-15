@@ -6,11 +6,28 @@ import ttkbootstrap as ttkb
 from ttkbootstrap.constants import *
 import subprocess
 import requests
+import os
+import re
 
 # Global variable to store the selected repository path
 repo_path = ""
 
 # functions
+
+def get_repo_name():
+    if not repo_path or not os.path.isdir(repo_path):
+        raise show_toast("Please select a valid repository path", 3000)
+    
+    bash_message = subprocess.run("git remote -v", shell=True, check=True, cwd=repo_path, stdout=subprocess.PIPE).stdout.decode('utf-8')
+    repo_name = re.search(r'github\.com[:/][^/]+/([^\.]+)\.git', bash_message)
+    
+    if not repo_name:
+        raise show_toast("No repository found in the selected path", 3000)
+    else:
+        repo_name = repo_name.group(1)
+    
+    repo_name_entry.delete(0, tk.END)
+    repo_name_entry.insert(0, repo_name)
 # def downloadScopes() -> list:
 #     with open('projects.json', 'r') as file:
 #         data = json.load(file)
@@ -340,7 +357,7 @@ ttkb.Label(frm2, text="Repo Name", bootstyle="dark", foreground="white").grid(co
 #Row 5 (Repo name entry and autodetect button)
 repo_name_entry = ttkb.Entry(frm2, bootstyle="primary", foreground="white")
 repo_name_entry.grid(column=2, row=5, sticky='w', padx=5, pady=5)
-repo_name_autodetect = ttkb.Button(frm2, text="Autodetect Repo Name", command=saveRepoUser, bootstyle="primary-outline")
+repo_name_autodetect = ttkb.Button(frm2, text="Autodetect Repo Name", command=get_repo_name, bootstyle="primary-outline")
 repo_name_autodetect.grid(column=1, row=5, sticky='w', padx=5, pady=5)
 
 #Row 6 (Save Button)
