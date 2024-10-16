@@ -29,6 +29,21 @@ def get_repo_name():
     repo_name_entry.delete(0, tk.END)
     repo_name_entry.insert(0, repo_name)
     
+def get_repo_owner():
+    if not repo_path or not os.path.isdir(repo_path):
+        raise show_toast("Please select a valid repository path", 3000)
+    
+    bash_message = subprocess.run("git remote -v", shell=True, check=True, cwd=repo_path, stdout=subprocess.PIPE).stdout.decode('utf-8')
+    repo_owner_str = re.search(r'git@github\.com:([^/]+)/', bash_message)
+    
+    if not repo_owner_str:
+        raise show_toast("No owner found in the selected path", 3000)
+    else:
+        repo_owner_str = repo_owner_str.group(1)
+    
+    repo_user.delete(0, tk.END)
+    repo_user.insert(0, repo_owner_str)
+    
 def downloadRepoInfo():
     with open('user_info.json', 'r') as file:
         data = json.load(file)
@@ -42,7 +57,7 @@ def updateRepoInfo():
     
     with open('user_info.json', 'w') as f:
          json.dump(info, f, indent=4)
-         show_toast("Updated the Repo information", 3000)
+    show_toast("Updated the Repo information", 3000)
     
     
     
@@ -360,14 +375,14 @@ ttkb.Button(frm2, text="Issues", command=show_project_frame, bootstyle="primary-
 #Row 1 (Separator)
 ttk.Separator(frm2, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(5, 10))
 
-#Row 2 (User input for repo name)
+#Row 2 (Repo Owner Label)
 ttkb.Label(frm2, text="Repo owner", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
-repo_user = ttkb.Entry(frm2, bootstyle="primary", foreground="white")
-repo_user.grid(column=2, row=2, sticky='w', padx=5, pady=5)
 
 #Row 3 (Button to save repo owner)
-repo_owner = ttkb.Button(frm2, text="Save Repo Owner", command=saveRepoUser, bootstyle="primary-outline")
+repo_owner = ttkb.Button(frm2, text="Autodetect Repo Owner", command=get_repo_owner, bootstyle="primary-outline")
 repo_owner.grid(column=1, row=3, sticky='w', padx=5, pady=5)
+repo_user = ttkb.Entry(frm2, bootstyle="primary", foreground="white")
+repo_user.grid(column=2, row=3, sticky='w', padx=5, pady=5)
 
 #Row 4 (Repo name label)
 ttkb.Label(frm2, text="Repo Name", bootstyle="dark", foreground="white").grid(column=1, row=4, sticky='w', padx=5, pady=5)
