@@ -34,6 +34,18 @@ def downloadRepoInfo():
         data = json.load(file)
     return data
     
+def updateRepoInfo():
+    info = downloadRepoInfo()
+    
+    info["repo_user"] = repo_user.get()
+    info["repo_name"] = repo_name_entry.get()
+    
+    with open('user_info.json', 'w') as f:
+         json.dump(info, f, indent=4)
+         show_toast("Updated the Repo information", 3000)
+    
+    
+    
 # def downloadScopes() -> list:
 #     with open('projects.json', 'r') as file:
 #         data = json.load(file)
@@ -367,7 +379,7 @@ repo_name_autodetect = ttkb.Button(frm2, text="Autodetect Repo Name", command=ge
 repo_name_autodetect.grid(column=1, row=5, sticky='w', padx=5, pady=5)
 
 #Row 6 (Save Button)
-save_info = ttkb.Button(frm2, text="Save Repo Info", command=saveRepoUser, bootstyle="success-outline")
+save_info = ttkb.Button(frm2, text="Save Repo Info", command=updateRepoInfo, bootstyle="success-outline")
 save_info.grid(column=1, row=6, sticky='w', padx=5, pady=5)
 
 #Row 7 (Separator)
