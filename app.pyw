@@ -97,13 +97,11 @@ def updateRepoInfo():
 # projects = downloadScopes()
 # names = [project["name"] for project in projects]
 
-# def update_combobox(*args):
-#     selected_value = project.get()
-#     for i in projects:
-#         if selected_value == i["name"]:
-#             scopeBox["values"] = i["scopes"]
-#             scopeBox.current(0)
-#             break
+def update_combobox(*args):
+    values = []
+    for i in activeIssues:
+        values.append(f"#{i['number']}")
+    scopeBox["values"] = values
 
 # def update_combobox2(*args):
 #     selected_value = projectSelect.get()
@@ -147,6 +145,8 @@ def enableBreakingChangeFooter():
 def changeDirectory():
     global repo_path
     global activeIssues
+    
+    activeIssues = []
     try:
         subprocess.run(f"cd {repo_path}", shell=True, check=True)
         show_toast(f"Changed directory to: {repo_path}", 3000)
@@ -156,12 +156,17 @@ def changeDirectory():
                 "title": i["title"],
                 "number": i["number"]
             })
+        update_combobox()
     except subprocess.CalledProcessError as e:
         error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
         show_toast(f"{error_message}", 3000)
 
 def createCommitMessage(*args):
     global repo_path
+    global activeIssues
+    
+    activeIssues = []
+    
     commitType = type.get()
     commitScope = f"({scopeBox.get()})" if scope.instate(['selected']) else ''
     if scope.instate(['selected']):
@@ -186,6 +191,13 @@ def createCommitMessage(*args):
         root.clipboard_clear()
         root.clipboard_append(commit)
         show_toast("Commit successfully created", 3000)
+        issues = getIssues()
+        for i in issues:
+            activeIssues.append({
+                "title": i["title"],
+                "number": i["number"]
+            })
+        update_combobox()
     except subprocess.CalledProcessError as e:
         error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
         root.clipboard_clear()
@@ -271,11 +283,6 @@ def show_project_frame():
 #         project.set(new_project_name)
 #         update_combobox2()
 
-def saveRepoUser():
-    with open('user_info.json', 'w') as f:
-        json.dump({"repo_user": repo_user.get()}, f, indent=4)
-    
-        
 def show_toast(message, duration=3000):
     toast = tk.Toplevel()
     toast.wm_overrideredirect(True)
