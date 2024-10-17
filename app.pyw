@@ -101,7 +101,7 @@ def update_combobox(*args):
     values = []
     for i in activeIssues:
         values.append(f"#{i['number']}")
-    scopeBox["values"] = values
+    issueBox["values"] = values
 
 # def update_combobox2(*args):
 #     selected_value = projectSelect.get()
@@ -124,11 +124,11 @@ def enableBreakingChange():
         breakingChangeFooter.config(state='disabled')
         breakingChangeFooterText.config(state='disabled', bootstyle='dark')
 
-def enableScope():
-    if scope.instate(["selected"]):
-        scopeBox.config(state='normal', bootstyle='primary')
+def enableIssue():
+    if issue.instate(["selected"]):
+        issueBox.config(state='normal', bootstyle='primary')
     else:
-        scopeBox.config(state='disabled', bootstyle='dark')
+        issueBox.config(state='disabled', bootstyle='dark')
 
 def enableBody():
     if body.instate(["selected"]):
@@ -168,9 +168,9 @@ def createCommitMessage(*args):
     activeIssues = []
     
     commitType = type.get()
-    commitScope = f"({scopeBox.get()})" if scope.instate(['selected']) else ''
-    if scope.instate(['selected']):
-        scope.invoke()
+    commitScope = f"({issueBox.get()})" if issue.instate(['selected']) else ''
+    if issue.instate(['selected']):
+        issue.invoke()
     commitBreakingChange = '!' if breakingChange.instate(['selected']) else ''
     if breakingChange.instate(['selected']):
         breakingChange.invoke()
@@ -205,7 +205,7 @@ def createCommitMessage(*args):
         show_toast(f"{error_message}", 3000)
 
     type.set('')
-    scopeBox.set('')
+    issueBox.set('')
     message.delete(0, tk.END)
     bodyText.set('')
     breakingChangeFooterText.set('')
@@ -341,12 +341,12 @@ type = ttkb.Combobox(frm, state="readonly", values=["build", "chore", "ci", "doc
 type.grid(column=1, row=4, sticky='w', padx=5, pady=5)
 
 #Row 5 (Scope label and selection)
-scope = ttkb.Checkbutton(frm, text="Scope", command=enableScope, bootstyle="primary-round-toggle")
-scope.grid(column=1, row=5, sticky='w', padx=5, pady=5)
-scope.invoke()
-scope.invoke()
-scopeBox = ttkb.Combobox(frm, state="readonly", values=[], bootstyle="dark", foreground="white")
-scopeBox.grid(column=2, row=5, sticky='w', padx=5, pady=5)
+issue = ttkb.Checkbutton(frm, text="Issue", command=enableIssue, bootstyle="primary-round-toggle")
+issue.grid(column=1, row=5, sticky='w', padx=5, pady=5)
+issue.invoke()
+issue.invoke()
+issueBox = ttkb.Combobox(frm, state="readonly", values=[], bootstyle="dark", foreground="white")
+issueBox.grid(column=2, row=5, sticky='w', padx=5, pady=5)
 
 #Row 6 (Message label)
 ttkb.Label(frm, text="Message", bootstyle="dark", foreground="white").grid(column=1, row=6, sticky='w', padx=5, pady=5)
@@ -391,7 +391,7 @@ breakingChangeFooterText.config(state='disabled')
 breakingChangeFooterText.configure(bootstyle='disabled')
 bodyText.config(state='disabled')
 bodyText.configure(bootstyle='disabled')
-scopeBox.config(state='disabled')
+issueBox.config(state='disabled')
 breakingChangeFooter.config(state='disabled')
 breakingChangeFooterText.config(state='disabled')
 
