@@ -25,22 +25,22 @@ def getIssues():
 
     if response.status_code == 200:
         issues = response.json()
-        show_toast("Issues fetched successfully", 3000)
+        show_toast("Issues fetched successfully", 3000, True)
         return issues
     else:
-        show_toast("Error getting issues", 3000)
+        show_toast("Error getting issues", 3000, False)
 
 # functions
 
 def get_repo_name():
     if not repo_path or not os.path.isdir(repo_path):
-        raise show_toast("Please select a valid repository path", 3000)
+        raise show_toast("Please select a valid repository path", 3000, False)
     
     bash_message = subprocess.run("git remote -v", shell=True, check=True, cwd=repo_path, stdout=subprocess.PIPE).stdout.decode('utf-8')
     repo_name = re.search(r'github\.com[:/][^/]+/([^\.]+)\.git', bash_message)
     
     if not repo_name:
-        raise show_toast("No repository found in the selected path", 3000)
+        raise show_toast("No repository found in the selected path", 3000, False)
     else:
         repo_name = repo_name.group(1)
     
@@ -49,13 +49,13 @@ def get_repo_name():
     
 def get_repo_owner():
     if not repo_path or not os.path.isdir(repo_path):
-        raise show_toast("Please select a valid repository path", 3000)
+        raise show_toast("Please select a valid repository path", 3000, False)
     
     bash_message = subprocess.run("git remote -v", shell=True, check=True, cwd=repo_path, stdout=subprocess.PIPE).stdout.decode('utf-8')
     repo_owner_str = re.search(r'git@github\.com:([^/]+)/', bash_message)
     
     if not repo_owner_str:
-        raise show_toast("No owner found in the selected path", 3000)
+        raise show_toast("No owner found in the selected path", 3000, False)
     else:
         repo_owner_str = repo_owner_str.group(1)
     
@@ -75,7 +75,7 @@ def updateRepoInfo():
     
     with open('user_info.json', 'w') as f:
          json.dump(info, f, indent=4)
-    show_toast("Updated the Repo information", 3000)
+    show_toast("Updated the Repo information", 3000, True)
     
     
     
@@ -149,7 +149,7 @@ def changeDirectory():
     activeIssues = []
     try:
         subprocess.run(f"cd {repo_path}", shell=True, check=True)
-        show_toast(f"Changed directory to: {repo_path}", 3000)
+        show_toast(f"Changed directory to: {repo_path}", 3000, True)
         issues = getIssues()
         for i in issues:
             activeIssues.append({
@@ -159,7 +159,7 @@ def changeDirectory():
         update_combobox()
     except subprocess.CalledProcessError as e:
         error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
-        show_toast(f"{error_message}", 3000)
+        show_toast(f"{error_message}", 3000, False)
 
 def createCommitMessage(*args):
     global repo_path
@@ -190,7 +190,7 @@ def createCommitMessage(*args):
         subprocess.run(commit, shell=True, check=True, cwd=repo_path)
         root.clipboard_clear()
         root.clipboard_append(commit)
-        show_toast("Commit successfully created", 3000)
+        show_toast("Commit successfully created", 3000, True)
         issues = getIssues()
         for i in issues:
             activeIssues.append({
@@ -202,7 +202,7 @@ def createCommitMessage(*args):
         error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
         root.clipboard_clear()
         root.clipboard_append(error_message)
-        show_toast(f"{error_message}", 3000)
+        show_toast(f"{error_message}", 3000, False)
 
     type.set('')
     issueBox.set('')
@@ -283,12 +283,19 @@ def show_project_frame():
 #         project.set(new_project_name)
 #         update_combobox2()
 
-def show_toast(message, duration=3000):
+def show_toast(message, duration=3000, state=True):
+    color = ""
+    
+    if state:
+        color = "success"
+    else:
+        color = "danger"
+    
     toast = tk.Toplevel()
     toast.wm_overrideredirect(True)
     toast.attributes("-topmost", True)
 
-    label = ttk.Label(toast, text=message, bootstyle="danger", padding=10)
+    label = ttk.Label(toast, text=message, bootstyle=color, padding=10, )
     label.pack()
 
     x = (toast.winfo_screenwidth() // 2) - (toast.winfo_reqwidth() // 2)
