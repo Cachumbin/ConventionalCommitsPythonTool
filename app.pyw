@@ -329,70 +329,74 @@ ttkb.Button(frm, text="Commit", command=show_commit_frame, bootstyle="primary-ou
 ttkb.Button(frm, text="Issues", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
 #Row 1 (Separator)
-ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(20, 10))
+ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(column=1, row=1, sticky='ew', pady=(20, 10))
 
-#Row 2 (Proyect Selection)
-project = ttkb.Combobox(frm, state="readonly", values=[1,2,3], bootstyle="primary", foreground="white")
-project.grid(column=2, row=2, sticky='w', padx=5, pady=5)
-ttkb.Label(frm, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=2, sticky='w', padx=5, pady=5)
+
+#Row 2 (Selected repo path label and button)
+repoPathLabel = ttkb.Label(frm, text="Select a repo path", bootstyle="dark", foreground="white", wraplength=300)
+repoPathLabel.grid(columnspan=3, row=2, sticky='w', padx=5, pady=5)
+ttkb.Button(frm, text="Select Repo Path", command=selectRepoPath, bootstyle="primary-outline").grid(column=2, row=2, sticky='w', padx=5, pady=5)
+
+#Row 3 (Repo path label and button)
+ttkb.Label(frm, text="Project Template", bootstyle="dark", foreground="white").grid(column=1, row=3, sticky='w', padx=5, pady=5)
+ttkb.Button(frm, text="Change Directory", command=changeDirectory, bootstyle="primary-outline").grid(column=2, row=3, sticky='w', padx=5, pady=5)
+
+#Row 4 (Separator)
+ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=4, sticky='ew', pady=(20, 10))
 
 #Row 3 (Type Label)
-ttkb.Label(frm, text="Type", bootstyle="dark", foreground="white").grid(column=1, row=3, sticky='w', padx=5, pady=5)
+ttkb.Label(frm, text="Type", bootstyle="dark", foreground="white").grid(column=1, row=5, sticky='w', padx=5, pady=5)
 
 #Row 4 (Type select and breaking change toggle)
 breakingChange = ttkb.Checkbutton(frm, text="Breaking Change", command=enableBreakingChange, bootstyle="primary-round-toggle")
-breakingChange.grid(column=2, row=4, sticky='w', padx=5, pady=5)
+breakingChange.grid(column=2, row=6, sticky='w', padx=5, pady=5)
 breakingChange.invoke()
 breakingChange.invoke()
 type = ttkb.Combobox(frm, state="readonly", values=["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"], bootstyle="primary", foreground="white")
-type.grid(column=1, row=4, sticky='w', padx=5, pady=5)
+type.grid(column=1, row=6, sticky='w', padx=5, pady=5)
 
 #Row 5 (Scope label and selection)
 issue = ttkb.Checkbutton(frm, text="Issue", command=enableIssue, bootstyle="primary-round-toggle")
-issue.grid(column=1, row=5, sticky='w', padx=5, pady=5)
+issue.grid(column=1, row=7, sticky='w', padx=5, pady=5)
 issue.invoke()
 issue.invoke()
 issueBox = ttkb.Combobox(frm, state="readonly", values=[], bootstyle="dark", foreground="white")
-issueBox.grid(column=2, row=5, sticky='w', padx=5, pady=5)
+issueBox.grid(column=2, row=7, sticky='w', padx=5, pady=5)
 
 #Row 6 (Message label)
-ttkb.Label(frm, text="Message", bootstyle="dark", foreground="white").grid(column=1, row=6, sticky='w', padx=5, pady=5)
+ttkb.Label(frm, text="Message", bootstyle="dark", foreground="white").grid(column=1, row=8, sticky='w', padx=5, pady=5)
 
 #Row 7 (Message entry)
 message = ttkb.Entry(frm, bootstyle="primary" ,foreground="white")
-message.grid(column=1, row=7, sticky='w', padx=5, pady=5)
+message.grid(column=1, row=9, sticky='w', padx=5, pady=5)
 
 #Row 8 (Body entry and toggle)
 body = ttkb.Checkbutton(frm, text="Body", command=enableBody, bootstyle="primary-round-toggle")
-body.grid(column=1, row=8, sticky='w', padx=5, pady=5)
+body.grid(column=1, row=10, sticky='w', padx=5, pady=5)
 body.invoke()
 body.invoke()
 bodyText = ttkb.Entry(frm, bootstyle="dark",foreground="white")
-bodyText.grid(column=2, row=8, sticky='w', padx=5, pady=5)
+bodyText.grid(column=2, row=10, sticky='w', padx=5, pady=5)
 
 #Row 9 (Breaking change Footer entry and toggle)
 breakingChangeFooter = ttkb.Checkbutton(frm, text="Breaking Change Footer", command=enableBreakingChangeFooter, bootstyle="primary-round-toggle")
-breakingChangeFooter.grid(column=1, row=9, sticky='w', padx=5, pady=5)
+breakingChangeFooter.grid(column=1, row=11, sticky='w', padx=5, pady=5)
 breakingChangeFooter.invoke()
 breakingChangeFooter.invoke()
 breakingChangeFooterText = ttkb.Entry(frm, bootstyle="dark", foreground="white")
-breakingChangeFooterText.grid(column=2, row=9, sticky='w', padx=5, pady=5)
+breakingChangeFooterText.grid(column=2, row=11, sticky='w', padx=5, pady=5)
 
 #Row 10 (Separator)
-ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=10, sticky='ew', pady=(20, 10))
+ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=12, sticky='ew', pady=(20, 10))
 
 #Row 11 (Select Repo path button)
-ttkb.Button(frm, text="Select Repo Path", command=selectRepoPath, bootstyle="primary-outline").grid(column=1, row=11, sticky='w', padx=5, pady=5)
 
 #Row 12 (Change repo button)
-ttkb.Button(frm, text="Change Directory", command=changeDirectory, bootstyle="primary-outline").grid(column=1, row=12, sticky='w', padx=5, pady=5)
 
 #Row 14 (Create commit button)
-ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="success-outline").grid(column=1, row=13, sticky='w', padx=5, pady=5)
+ttkb.Button(frm, text="Create Commit", command=createCommitMessage, bootstyle="success-outline").grid(column=1, row=15, sticky='w', padx=5, pady=5)
 
 #Row 15 (Repo path label)
-repoPathLabel = ttkb.Label(frm, text="Select a repo path", bootstyle="dark", foreground="white", wraplength=300)
-repoPathLabel.grid(columnspan=3, row=14, sticky='w', padx=5, pady=5)
 
 breakingChangeFooterText.config(state='disabled')
 breakingChangeFooterText.configure(bootstyle='disabled')
