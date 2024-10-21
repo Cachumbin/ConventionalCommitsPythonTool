@@ -186,18 +186,21 @@ def createCommitMessage(*args):
 
     # Run the git commit command in the selected repository path
     try:
-        subprocess.run("git add .", shell=True, check=True, cwd=repo_path)
-        subprocess.run(commit, shell=True, check=True, cwd=repo_path)
-        root.clipboard_clear()
-        root.clipboard_append(commit)
-        show_toast("Commit successfully created", 3000, True)
-        issues = getIssues()
-        for i in issues:
-            activeIssues.append({
-                "title": i["title"],
-                "number": i["number"]
-            })
-        update_combobox()
+        if not repo_path:
+            raise show_toast("Please select a valid repository path", 3000, False)
+        else:
+            subprocess.run("git add .", shell=True, check=True, cwd=repo_path)
+            subprocess.run(commit, shell=True, check=True, cwd=repo_path)
+            root.clipboard_clear()
+            root.clipboard_append(commit)
+            show_toast("Commit successfully created", 3000, True)
+            issues = getIssues()
+            for i in issues:
+                activeIssues.append({
+                    "title": i["title"],
+                    "number": i["number"]
+                })
+            update_combobox()
     except subprocess.CalledProcessError as e:
         error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
         root.clipboard_clear()
@@ -307,7 +310,7 @@ def show_toast(message, duration=3000, state=True):
 #----------Frame 1 (Commits Functions)----------#
 root = ttkb.Window(themename="solar")
 root.title("Conventional Commits Tool")
-root.geometry('350x600')
+root.geometry('370x600')
 root.resizable(False, False)
 
 #Style Object
@@ -329,7 +332,7 @@ ttkb.Button(frm, text="Commit", command=show_commit_frame, bootstyle="primary-ou
 ttkb.Button(frm, text="Issues", command=show_project_frame, bootstyle="primary-outline").grid(column=2, row=0, sticky='w', padx=5, pady=5)
 
 #Row 1 (Separator)
-ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(column=1, row=1, sticky='ew', pady=(20, 10))
+ttk.Separator(frm, orient='horizontal', style='Custom.TSeparator').grid(columnspan=3, row=1, sticky='ew', pady=(20, 10))
 
 
 #Row 2 (Selected repo path label and button)
@@ -355,7 +358,7 @@ breakingChange.invoke()
 type = ttkb.Combobox(frm, state="readonly", values=["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"], bootstyle="primary", foreground="white")
 type.grid(column=1, row=6, sticky='w', padx=5, pady=5)
 
-#Row 7 (Scope label and selection)
+#Row 7 (Issue label and selection)
 issue = ttkb.Checkbutton(frm, text="Issue", command=enableIssue, bootstyle="primary-round-toggle")
 issue.grid(column=1, row=7, sticky='w', padx=5, pady=5)
 issue.invoke()
@@ -400,7 +403,7 @@ issueBox.config(state='disabled')
 breakingChangeFooter.config(state='disabled')
 breakingChangeFooterText.config(state='disabled')
 
-#----------Frame 2 (Project Functions)----------#
+#----------Frame 2 (Issue Functions)----------#
 frm2 = ttkb.Frame(root, padding=10, bootstyle="default")
 frm2.columnconfigure(1, weight=1, uniform="equal")
 frm2.columnconfigure(2, weight=1, uniform="equal")
