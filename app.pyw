@@ -148,15 +148,18 @@ def changeDirectory():
     
     activeIssues = []
     try:
-        subprocess.run(f"cd {repo_path}", shell=True, check=True)
-        show_toast(f"Changed directory to: {repo_path}", 3000, True)
-        issues = getIssues()
-        for i in issues:
-            activeIssues.append({
-                "title": i["title"],
-                "number": i["number"]
-            })
-        update_combobox()
+        if not repo_path:
+            raise show_toast("Please select a valid repository path", 3000, False)
+        else:
+            subprocess.run(f"cd {repo_path}", shell=True, check=True)
+            show_toast(f"Changed directory to: {repo_path}", 3000, True)
+            issues = getIssues()
+            for i in issues:
+                activeIssues.append({
+                    "title": i["title"],
+                    "number": i["number"]
+                })
+            update_combobox()
     except subprocess.CalledProcessError as e:
         error_message = e.stderr.decode('utf-8') if e.stderr else str(e)
         show_toast(f"{error_message}", 3000, False)
