@@ -484,6 +484,8 @@ ttk.Separator(frm2, orient='horizontal', style='Custom.TSeparator').grid(columns
 # deleteScope = ttkb.Button(frm2, text="Delete Scope", command=deleteScope, bootstyle="primary-outline")
 # deleteScope.grid(column=2, row=8, sticky='w', padx=5, pady=5)
 
+#----------Frame 3 (Projects and Scopes Frame)----------#
+
 #Showing the first frame
 frm.grid(sticky='nsew')
 
